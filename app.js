@@ -262,7 +262,7 @@ function receivedMessage(event) {
    checkstatus(senderID,"file",messageAttachments[0].type,messageAttachments,"","","");
    }
    else{
-   
+     checkstatus(senderID, "file", messageAttachments[0].type, messageAttachments, "", "", "");
    }
    // sendTextMessage(senderID, "Message with attachment received");
 
@@ -591,7 +591,7 @@ var http = require('http');
             }
 
             else if (status == "Q2") {
-                sendTextMessagewithlog(id, "How many window you have? [Please enter the number]");
+                sendTextMessagewithlog(id, "Please tell the count? [Please enter the number]");
             }
             else if(status=="REG_USERS"){
 
