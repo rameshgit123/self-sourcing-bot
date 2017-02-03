@@ -323,47 +323,22 @@ function receivedPostback(event) {
   }
   else if(payload=="Q1NO")
   {
-     
-
-   fb.api('/' + senderID + '', function (err, data) {            
+             fb.api('/' + senderID + '', function (err, data) {            
                      if (data) {          
-                        
-                     assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1NO",recipientID);   
-                     
-                    
+                     assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1NO",recipientID);               
                      }
                      }); 
- 
- 
   }  
   else if(payload=="USER_DEFINED_PAYLOAD")
   {
-      sendTextMessage(senderID, "Good Morning!!!");
-      var messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Do you have any visicooler/fridge/chiller like below?",
-                    "subtitle": "",
-                    "image_url": "https://self-sourcing-bot.herokuapp.com/Visi_Pic.jpg",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Yes",
-                        "payload": "Q1YES"
-                    }, {
-                        "type": "postback",
-                        "title": "No",
-                        "payload": "Q1NO"
-                    }]
-                }]
-            }
-        }
-    };
-    setTimeout(function () {         
-          sendGenericMessage(senderID,messageData); 
-        }, 500);
+      fb.api('/' + senderID + '', function (err, data) {
+          if (data) {
+
+              assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "Q1YES", recipientID);
+          }
+      });
+
+    
       
   }   
   else if(payload=="Q4NO")
@@ -608,9 +583,41 @@ var http = require('http');
     };
       sendGenericMessage(id,messageData); 
 
-            }else{
-              sendTextMessagewithlog(id, "How many window you have? [Please enter the number]"); 
-              }
+            }
+
+            else if (status == "Q2") {
+                sendTextMessagewithlog(id, "How many window you have? [Please enter the number]");
+            }
+            else {
+
+                sendTextMessage(senderID, "Good Morning!!!");
+
+                var messageData = {
+                    "attachment": {
+                        "type": "template",
+                        "payload": {
+                            "template_type": "generic",
+                            "elements": [{
+                                "title": "Do you have any visicooler/fridge/chiller like above?",
+                                "subtitle": "",
+                                "image_url": "https://self-sourcing-bot.herokuapp.com/Visi_Pic.jpg",
+                                "buttons": [{
+                                    "type": "postback",
+                                    "title": "Yes",
+                                    "payload": "Q1YES"
+                                }, {
+                                    "type": "postback",
+                                    "title": "No",
+                                    "payload": "Q1NO"
+                                }]
+                            }]
+                        }
+                    }
+                };
+                setTimeout(function () {
+                    sendGenericMessage(senderID, messageData);
+                }, 500);
+            }
             console.log(status);                 
         });
     });
@@ -690,33 +697,36 @@ var http = require('http');
       console.log("mission status = "+status);
       if(status=="New" || status=="Q1")
       {
-      
-   
-        var messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Do you have any company Shelf/Window?(Shelf where company place their own product)?",
-                    "subtitle": "",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Yes",
-                        "payload": "Q1YES"
-                    }, {
-                        "type": "postback",
-                        "title": "No",
-                        "payload": "Q1NO"
-                    }]
-                }]
-            }
-        }
-    };
-      sendGenericMessage(id,messageData);  
+          sendTextMessage(senderID, "Good Morning!!!");
+
+          var messageData = {
+              "attachment": {
+                  "type": "template",
+                  "payload": {
+                      "template_type": "generic",
+                      "elements": [{
+                          "title": "Do you have any visicooler/fridge/chiller like above?",
+                          "subtitle": "",
+                          "image_url": "https://self-sourcing-bot.herokuapp.com/Visi_Pic.jpg",
+                          "buttons": [{
+                              "type": "postback",
+                              "title": "Yes",
+                              "payload": "Q1YES"
+                          }, {
+                              "type": "postback",
+                              "title": "No",
+                              "payload": "Q1NO"
+                          }]
+                      }]
+                  }
+              }
+          };
+          setTimeout(function () {
+              sendGenericMessage(senderID, messageData);
+          }, 500);
       }
       else if(status=="Q2"){ 
-        sendTextMessagewithlog(id, "How many window you have? [Please enter the number]"); 
+          sendTextMessagewithlog(id, "Please tell the count? [Please enter the number]");
       } 
       else if(status=="Q4")
       {
