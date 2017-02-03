@@ -19,6 +19,11 @@ const
   request = require('request');
 var app = express();
 
+var sdk = require('facebook-node-sdk');
+var fb = new sdk({
+    appId: config.get('AppId'),
+    secret: config.get('appSecret')
+}).setAccessToken(config.get('pageAccessToken'));
 
 app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
