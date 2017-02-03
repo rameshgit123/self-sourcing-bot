@@ -593,9 +593,9 @@ var http = require('http');
             else if (status == "Q2") {
                 sendTextMessagewithlog(id, "How many window you have? [Please enter the number]");
             }
-            else {
+            else if(status=="REG_USERS"){
 
-                sendTextMessage(senderID, "Good Morning!!!");
+                sendTextMessage(id, "Good Morning!!!");
 
                 var messageData = {
                     "attachment": {
@@ -620,7 +620,7 @@ var http = require('http');
                     }
                 };
                 setTimeout(function () {
-                    sendGenericMessage(senderID, messageData);
+                    sendGenericMessage(id, messageData);
                 }, 500);
             }
             console.log(status);                 
@@ -702,7 +702,7 @@ var http = require('http');
       console.log("mission status = "+status);
       if(status=="New" || status=="Q1")
       {
-          sendTextMessage(senderID, "Good Morning!!!");
+          sendTextMessage(id, "Good Morning!!!");
 
           var messageData = {
               "attachment": {
@@ -727,7 +727,7 @@ var http = require('http');
               }
           };
           setTimeout(function () {
-              sendGenericMessage(senderID, messageData);
+              sendGenericMessage(id, messageData);
           }, 500);
       }
       else if(status=="Q2"){ 
