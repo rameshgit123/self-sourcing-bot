@@ -345,8 +345,9 @@ function receivedPostback(event) {
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "Do you have any company Shelf/Window?(Shelf where company place their own product)?",
+                    "title": "Do you have any visicooler/fridge/chiller like below?",
                     "subtitle": "",
+                    "image_url": "https://self-sourcing-bot.herokuapp.com/Visi_Pic.jpg",
                     "buttons": [{
                         "type": "postback",
                         "title": "Yes",
