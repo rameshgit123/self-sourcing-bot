@@ -339,7 +339,7 @@ function receivedPostback(event) {
       fb.api('/' + senderID + '', function (err, data) {
           if (data) {
 
-              assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "Q1YES", recipientID);
+              assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS", recipientID);
           }
       });
 
