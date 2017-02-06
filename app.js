@@ -345,36 +345,44 @@ function receivedPostback(event) {
 
     
       
-  }   
-  else if(payload=="Q4NO")
-  {
+  }
+  else if (payload == "Q4NO") {
 
-  checkstatus(senderID,"Q4NO","text","");  
+      checkstatus(senderID, "Q4NO", "text", "");
   }
-   else if(payload=="Q4YES")
-  {
-   
-   checkstatus(senderID,"Q4YES","text","");  
+  else if (payload == "Visi_More_YES") {
+
+      checkstatus(senderID, "Visi_More_YES", "text", "");
   }
-   else if(payload=="Q7NO")
+  else if (payload == "Visi_More_No")
   {
-    
-  checkstatus(senderID,"Q7NO","text","");  
+      checkstatus(senderID, "Visi_More_No", "text", "");
   }
-   else if(payload=="Q7YES")
-  {
-    
-   checkstatus(senderID,"Q7YES","text","");  
+  else if (payload == "confirm_next_count_fail_yes") {
+      checkstatus(senderID, "confirm_next_count_fail_yes", "text", "");
   }
-   else if(payload=="Q8NO")
-  {
-    
-  checkstatus(senderID,"Q8NO","text","");  
+  else if (payload == "confirm_next_count_fail_no") {
+      checkstatus(senderID, "confirm_next_count_fail_no", "text", "");
   }
-   else if(payload=="Q8YES")
-  {
-   
-   checkstatus(senderID,"Q8YES","text","");  
+  else if (payload == "Q4YES") {
+
+      checkstatus(senderID, "Q4YES", "text", "");
+  }
+  else if (payload == "Q7NO") {
+
+      checkstatus(senderID, "Q7NO", "text", "");
+  }
+  else if (payload == "Q7YES") {
+
+      checkstatus(senderID, "Q7YES", "text", "");
+  }
+  else if (payload == "Q8NO") {
+
+      checkstatus(senderID, "Q8NO", "text", "");
+  }
+  else if (payload == "Q8YES") {
+
+      checkstatus(senderID, "Q8YES", "text", "");
   }
 
   // When a postback is called, we'll send a message back to the sender to 
@@ -571,8 +579,9 @@ var http = require('http');
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "Do you have Visicooler?",
+                    "title": "Do you have any company specific area/window like above?",
                     "subtitle": "",
+                    "image_url": "https://self-sourcing-bot.herokuapp.com/display.jpg",
                     "buttons": [{
                         "type": "postback",
                         "title": "Yes",
@@ -741,8 +750,9 @@ var http = require('http');
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "Do you have Visicooler?",
+                    "title": "Do you have any company specific area/window like above.",
                     "subtitle": "",
+                    "image_url": "https://self-sourcing-bot.herokuapp.com/display.jpg",
                     "buttons": [{
                         "type": "postback",
                         "title": "Yes",
@@ -833,6 +843,59 @@ var http = require('http');
         }
     };
       sendGenericMessage(id,messageData); 
+      }
+      else if (status=="confirm_next")
+      {
+       
+      
+              var messageData = {
+                  "attachment": {
+                      "type": "template",
+                      "payload": {
+                          "template_type": "generic",
+                          "elements": [{
+                              "title": "Do you have more images?",
+                              "subtitle": "",
+                              "buttons": [{
+                                  "type": "postback",
+                                  "title": "Yes",
+                                  "payload": "Visi_More_YES"
+                              }, {
+                                  "type": "postback",
+                                  "title": "No",
+                                  "payload": "Visi_More_No"
+                              }]
+                          }]
+                      }
+                  }
+              };
+              sendGenericMessage(id, messageData);
+
+      }
+      else if (status.indexOf('confirm_next_count_fail-') !== -1)
+      {
+          var messageData = {
+              "attachment": {
+                  "type": "template",
+                  "payload": {
+                      "template_type": "generic",
+                      "elements": [{
+                          "title": status.replace('confirm_next_count_fail-', ''),
+                          "subtitle": "",
+                          "buttons": [{
+                              "type": "postback",
+                              "title": "Yes",
+                              "payload": "confirm_next_count_fail_yes"
+                          }, {
+                              "type": "postback",
+                              "title": "No",
+                              "payload": "confirm_next_count_fail_no"
+                          }]
+                      }]
+                  }
+              }
+          };
+          sendGenericMessage(id, messageData);
       }
          else{
           sendTextMessage(id,status);   
