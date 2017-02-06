@@ -358,11 +358,24 @@ function receivedPostback(event) {
   {
       checkstatus(senderID, "Visi_More_No", "text", "");
   }
+  else if (payload == "Window_More_YES") {
+
+      checkstatus(senderID, "Window_More_YES", "text", "");
+  }
+  else if (payload == "Window_More_No") {
+      checkstatus(senderID, "Window_More_No", "text", "");
+  }
   else if (payload == "confirm_next_count_fail_yes") {
       checkstatus(senderID, "confirm_next_count_fail_yes", "text", "");
   }
   else if (payload == "confirm_next_count_fail_no") {
       checkstatus(senderID, "confirm_next_count_fail_no", "text", "");
+  }
+  else if (payload == "confirm_window_count_fail_yes") {
+      checkstatus(senderID, "confirm_window_count_fail_yes", "text", "");
+  }
+  else if (payload == "confirm_window_count_fail_no") {
+      checkstatus(senderID, "confirm_window_count_fail_yes", "text", "");
   }
   else if (payload == "Q4YES") {
 
@@ -771,23 +784,17 @@ var http = require('http');
       }
       else if(status=="Q4NO" || status=="Q7")
       {
+
+     
        var messageData = {
         "attachment": {
             "type": "template",
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "Do you have Limca 500 Ml in stock?",
-                    "subtitle": "",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Yes",
-                        "payload": "Q7YES"
-                    }, {
-                        "type": "postback",
-                        "title": "No",
-                        "payload": "Q7NO"
-                    }]
+                    "title": "What is the selling price of above item (200 ml Glass Bottle)",
+                    "image_url": "https://self-sourcing-bot.herokuapp.com/soft-drinks-5.jpg",
+                    "subtitle": ""                    
                 }]
             }
         }
@@ -819,34 +826,9 @@ var http = require('http');
     };
       sendGenericMessage(id,messageData); 
       }
-      else if(status=="Q8")
-      {
-       var messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Do you have Dew 500 Ml in stock?",
-                    "subtitle": "",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Yes",
-                        "payload": "Q8YES"
-                    }, {
-                        "type": "postback",
-                        "title": "No",
-                        "payload": "Q8NO"
-                    }]
-                }]
-            }
-        }
-    };
-      sendGenericMessage(id,messageData); 
-      }
+     
       else if (status=="confirm_next")
-      {
-       
+      {       
       
               var messageData = {
                   "attachment": {
@@ -870,6 +852,63 @@ var http = require('http');
                   }
               };
               sendGenericMessage(id, messageData);
+
+      }
+      else if (status == "confirm_next_window") {
+
+          var messageData = {
+              "attachment": {
+                  "type": "template",
+                  "payload": {
+                      "template_type": "generic",
+                      "elements": [{
+                          "title": "Do you have more images?",
+                          "subtitle": "",
+                          "buttons": [{
+                              "type": "postback",
+                              "title": "Yes",
+                              "payload": "window_More_YES"
+                          }, {
+                              "type": "postback",
+                              "title": "No",
+                              "payload": "Window_More_No"
+                          }]
+                      }]
+                  }
+              }
+          };
+          sendGenericMessage(id, messageData);
+
+      }
+      else if (status == "Invoice") {
+
+          var messageData = {
+              "attachment": {
+                  "type": "template",
+                  "payload": {
+                      "template_type": "generic",
+                      "elements": [{
+                          "title": "Can you take the pic of cold drink bill/invoice?",
+                          "subtitle": "",
+                          "buttons": [{
+                              "type": "postback",
+                              "title": "Yes",
+                              "payload": "Q8YES"
+                          }, {
+                              "type": "postback",
+                              "title": "No",
+                              "payload": "Q8NO"
+                          }]
+                      }]
+                  }
+              }
+          };
+          sendGenericMessage(id, messageData);
+
+      }
+      else if (status == "Q8Url") {
+
+          sendTextMessagewithlog(id, "Please share the pic of any cold drink bill/invoice");
 
       }
       else if (status.indexOf('confirm_next_count_fail-') !== -1)
@@ -897,6 +936,32 @@ var http = require('http');
           };
           sendGenericMessage(id, messageData);
       }
+
+      else if (status.indexOf('confirm_window_count_fail-') !== -1) {
+          var messageData = {
+              "attachment": {
+                  "type": "template",
+                  "payload": {
+                      "template_type": "generic",
+                      "elements": [{
+                          "title": status.replace('confirm_window_count_fail-', ''),
+                          "subtitle": "",
+                          "buttons": [{
+                              "type": "postback",
+                              "title": "Yes",
+                              "payload": "confirm_window_count_fail_yes"
+                          }, {
+                              "type": "postback",
+                              "title": "No",
+                              "payload": "confirm_window_count_fail_no"
+                          }]
+                      }]
+                  }
+              }
+          };
+          sendGenericMessage(id, messageData);
+      }
+
          else{
           sendTextMessage(id,status);   
          }
