@@ -867,7 +867,7 @@ var http = require('http');
                           "buttons": [{
                               "type": "postback",
                               "title": "Yes",
-                              "payload": "window_More_YES"
+                              "payload": "Window_More_YES"
                           }, {
                               "type": "postback",
                               "title": "No",
