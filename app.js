@@ -613,7 +613,7 @@ var http = require('http');
             }
 
             else if (status == "Q2") {
-                sendTextMessagewithlog(id, "Please tell the count? [Please enter the number]");
+                sendTextMessagewithlog(id, "Please write the count of Visi cooler(like above)?");
             }
             else if(status=="REG_USERS"){
 
@@ -734,7 +734,7 @@ var http = require('http');
                       "elements": [{
                           "title": "Do you have any visicooler/fridge/chiller like above?",
                           "subtitle": "",
-                          "image_url": "https://self-sourcing-bot.herokuapp.com/Visi_Pic.jpg",
+                          "image_url": "https://self-sourcing-bot.herokuapp.com/refridge.jpg",
                           "buttons": [{
                               "type": "postback",
                               "title": "Yes",
@@ -763,7 +763,7 @@ var http = require('http');
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "Do you have any company specific area/window like above.",
+                    "title": "Do you have any company specific area/window/shelf display.",
                     "subtitle": "",
                     "image_url": "https://self-sourcing-bot.herokuapp.com/display.jpg",
                     "buttons": [{
@@ -782,10 +782,26 @@ var http = require('http');
       sendGenericMessage(id,messageData); 
 
       }
-      else if(status=="Q4NO" || status=="Q7")
+      else if(status=="Q7_1")
       {
+          var messageData = {
+              "attachment": {
+                  "type": "template",
+                  "payload": {
+                      "template_type": "generic",
+                      "elements": [{
+                          "title": "What is the purchase price of above item (200 ml Glass Bottle)",
+                          "image_url": "https://self-sourcing-bot.herokuapp.com/coco.jpg",
+                          "subtitle": ""
+                      }]
+                  }
+              }
+          };
+          sendGenericMessage(id, messageData);
 
-     
+      }
+      else if(status=="Q4NO" || status=="Q7")
+      {     
        var messageData = {
         "attachment": {
             "type": "template",
@@ -793,7 +809,7 @@ var http = require('http');
                 "template_type": "generic",
                 "elements": [{
                     "title": "What is the selling price of above item (200 ml Glass Bottle)",
-                    "image_url": "https://self-sourcing-bot.herokuapp.com/soft-drinks-5.jpg",
+                    "image_url": "https://self-sourcing-bot.herokuapp.com/coco.jpg",
                     "subtitle": ""                    
                 }]
             }
@@ -906,13 +922,31 @@ var http = require('http');
           sendGenericMessage(id, messageData);
 
       }
+      else if (status == "Please take the pic of 1st visicooler with door open like below.") {
+          sendTextMessagewithlog(id, status);
+          setTimeout(function () {    
+          var messageData = {
+              "attachment": {
+                  "type": "template",
+                  "payload": {
+                      "template_type": "generic",
+                      "elements": [{
+                          "title": "Sample visicooler",
+                          "image_url": "https://self-sourcing-bot.herokuapp.com/Visi_Pic.jpg",
+                          "subtitle": ""
+                      }]
+                  }
+              }
+          };
+          sendGenericMessage(id, messageData);
+          }, 200);
+      }
       else if (status == "Q8Url") {
 
           sendTextMessagewithlog(id, "Please share the pic of any cold drink bill/invoice");
 
       }
-      else if (status.indexOf('confirm_next_count_fail-') !== -1)
-      {
+      else if (status.indexOf('confirm_next_count_fail-') !== -1) {
           var messageData = {
               "attachment": {
                   "type": "template",
@@ -962,9 +996,9 @@ var http = require('http');
           sendGenericMessage(id, messageData);
       }
 
-         else{
-          sendTextMessage(id,status);   
-         }
+      else {
+          sendTextMessage(id, status);
+      }
 
        
   });
