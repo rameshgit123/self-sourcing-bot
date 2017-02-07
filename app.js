@@ -627,7 +627,7 @@ var http = require('http');
                             "elements": [{
                                 "title": "Do you have any visicooler/fridge/chiller like above?",
                                 "subtitle": "",
-                                "image_url": "https://self-sourcing-bot.herokuapp.com/Visi_Pic.jpg",
+                                "image_url": "https://self-sourcing-bot.herokuapp.com/refridge.jpg",
                                 "buttons": [{
                                     "type": "postback",
                                     "title": "Yes",
@@ -750,7 +750,7 @@ var http = require('http');
           };
           setTimeout(function () {
               sendGenericMessage(id, messageData);
-          }, 500);
+          }, 200);
       }
       else if(status=="Q2"){ 
           sendTextMessagewithlog(id, "Please tell the count? [Please enter the number]");
