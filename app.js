@@ -358,6 +358,7 @@ function receivedPostback(event) {
   {
       checkstatus(senderID, "Visi_More_No", "text", "");
   }
+
   else if (payload == "Window_More_YES") {
 
       checkstatus(senderID, "Window_More_YES", "text", "");
@@ -618,7 +619,6 @@ var http = require('http');
             else if(status=="REG_USERS"){
 
                 sendTextMessage(id, "Good Morning!!!");
-
                 var messageData = {
                     "attachment": {
                         "type": "template",
@@ -643,7 +643,7 @@ var http = require('http');
                 };
                 setTimeout(function () {
                     sendGenericMessage(id, messageData);
-                }, 500);
+                }, 300);
             }
             console.log(status);                 
         });
@@ -816,6 +816,36 @@ var http = require('http');
         }
     };
       sendGenericMessage(id,messageData); 
+      }
+      else if(status=="Internal Server Error")
+      {
+          sendTextMessage(id, "Good Morning!!!");
+          var messageData = {
+              "attachment": {
+                  "type": "template",
+                  "payload": {
+                      "template_type": "generic",
+                      "elements": [{
+                          "title": "Do you have any visicooler/fridge/chiller like above?",
+                          "subtitle": "",
+                          "image_url": "https://self-sourcing-bot.herokuapp.com/refridge.jpg",
+                          "buttons": [{
+                              "type": "postback",
+                              "title": "Yes",
+                              "payload": "Q1YES"
+                          }, {
+                              "type": "postback",
+                              "title": "No",
+                              "payload": "Q1NO"
+                          }]
+                      }]
+                  }
+              }
+          };
+          setTimeout(function () {
+              sendGenericMessage(id, messageData);
+          }, 300);
+
       }
       else if(status=="Q8")
       {
