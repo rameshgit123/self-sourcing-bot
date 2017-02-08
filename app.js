@@ -62,28 +62,32 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
 app.get('/sendmessage', function (req, res) {
     res.send('Facebook Messanger Bot...!');
     if (req.query['senderid'] != null) {
-    var messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Do you have any company Shelf/Window?(Shelf where company place their own product)?",
-                    "subtitle": "",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Yes",
-                        "payload": "Q1YES"
-                    }, {
-                        "type": "postback",
-                        "title": "No",
-                        "payload": "Q1NO"
+        sendTextMessage(id, "Good Morning!!!");
+        var messageData = {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "Do you have any visicooler/fridge/chiller like above?",
+                        "subtitle": "",
+                        "image_url": "https://self-sourcing-bot.herokuapp.com/refridge.jpg",
+                        "buttons": [{
+                            "type": "postback",
+                            "title": "Yes",
+                            "payload": "Q1YES"
+                        }, {
+                            "type": "postback",
+                            "title": "No",
+                            "payload": "Q1NO"
+                        }]
                     }]
-                }]
+                }
             }
-        }
-    };
-      sendGenericMessage(req.query['senderid'],messageData);         
+        };
+        setTimeout(function () {
+            sendGenericMessage(id, messageData);
+        }, 300);
     }
 });
 
