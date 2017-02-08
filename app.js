@@ -62,7 +62,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
 app.get('/sendmessage', function (req, res) {
     res.send('Facebook Messanger Bot...!');
     if (req.query['senderid'] != null) {
-        sendTextMessage(id, "Good Morning!!!");
+        sendTextMessage(req.query['senderid'], "Good Morning!!!");
         var messageData = {
             "attachment": {
                 "type": "template",
@@ -86,7 +86,7 @@ app.get('/sendmessage', function (req, res) {
             }
         };
         setTimeout(function () {
-            sendGenericMessage(id, messageData);
+            sendGenericMessage(req.query['senderid'], messageData);
         }, 300);
     }
 });
