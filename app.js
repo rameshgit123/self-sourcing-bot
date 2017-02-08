@@ -904,7 +904,7 @@ var http = require('http');
                   "payload": {
                       "template_type": "generic",
                       "elements": [{
-                          "title": "Can you take the pic of cold drink bill/invoice?",
+                          "title": "Can you take the pic of bill/invoice?",
                           "subtitle": "",
                           "buttons": [{
                               "type": "postback",
@@ -943,7 +943,7 @@ var http = require('http');
       }
       else if (status == "Q8Url") {
 
-          sendTextMessagewithlog(id, "Please share the pic of any cold drink bill/invoice");
+          sendTextMessagewithlog(id, "Please share the pic of bill/invoice");
 
       }
       else if (status.indexOf('confirm_next_count_fail-') !== -1) {
