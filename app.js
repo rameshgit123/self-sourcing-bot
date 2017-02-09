@@ -380,7 +380,7 @@ function receivedPostback(event) {
       checkstatus(senderID, "confirm_window_count_fail_yes", "text", "");
   }
   else if (payload == "confirm_window_count_fail_no") {
-      checkstatus(senderID, "confirm_window_count_fail_yes", "text", "");
+      checkstatus(senderID, "confirm_window_count_fail_no", "text", "");
   }
   else if (payload == "Q4YES") {
 
