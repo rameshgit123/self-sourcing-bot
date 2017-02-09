@@ -938,8 +938,9 @@ var http = require('http');
                   "payload": {
                       "template_type": "generic",
                       "elements": [{
-                          "title": "Can you take the pic of bill/invoice?",
+                          "title": "Can you take the pic of bill/invoice like above?",
                           "subtitle": "",
+                          "image_url": "https://self-sourcing-bot.herokuapp.com/invoice.jpg",                          
                           "buttons": [{
                               "type": "postback",
                               "title": "Yes",
