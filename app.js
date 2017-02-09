@@ -932,15 +932,15 @@ var http = require('http');
       }
       else if (status == "Invoice") {
 
-          var messageData = {
+
+          var messageData1 = {
               "attachment": {
                   "type": "template",
                   "payload": {
                       "template_type": "generic",
                       "elements": [{
-                          "title": "Can you take the pic of bill/invoice like above?",
+                          "title": "Can you take picture of any Cold Drink bill/invoice of last 30 days like below?",
                           "subtitle": "",
-                          "image_url": "https://self-sourcing-bot.herokuapp.com/invoice.jpg",                          
                           "buttons": [{
                               "type": "postback",
                               "title": "Yes",
@@ -954,7 +954,26 @@ var http = require('http');
                   }
               }
           };
-          sendGenericMessage(id, messageData);
+          sendGenericMessage(id, messageData1);
+
+
+          var messageData = {
+              recipient: {
+                  id: id
+              },
+              message: {
+                  attachment: {
+                      type: "image",
+                      payload: {
+                          url: "https://self-sourcing-bot.herokuapp.com/invoice.jpg"
+                      }
+                  }
+              }
+          };
+
+          setTimeout(function () {
+              sendGenericMessage(id, messageData);
+          }, 200);   
 
       }
       else if (status == "Please take the pic of 1st visicooler with door open like below.") {
@@ -978,7 +997,7 @@ var http = require('http');
       }
       else if (status == "Q8Url") {
 
-          sendTextMessagewithlog(id, "Please share the pic of bill/invoice");
+          sendTextMessagewithlog(id, "Please share the pic of any Cold Drink bill/invoice of last 30 days like above");
 
       }
       else if (status.indexOf('confirm_next_count_fail-') !== -1) {
