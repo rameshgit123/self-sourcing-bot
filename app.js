@@ -972,7 +972,7 @@ var http = require('http');
           };
 
           setTimeout(function () {
-              sendGenericMessage(id, messageData);
+              callSendAPI(messageData);
           }, 200);   
 
       }
