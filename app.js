@@ -87,6 +87,7 @@ app.get('/sendmessage', function (req, res) {
         };
         setTimeout(function () {
             sendGenericMessage(req.query['senderid'], messageData);
+            writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
         }, 300);
     }
 });
@@ -452,7 +453,7 @@ function sendTextMessage(recipientId, messageText) {
  *
  */
 function sendTextMessagewithlog(recipientId, messageText) {
-writelog(recipientId,messageText,"BOT");
+
   var messageData = {
     recipient: {
       id: recipientId
@@ -471,7 +472,7 @@ writelog(recipientId,messageText,"BOT");
  *
  */
 function sendGenericMessage(recipientId,MessageTemplate) {
- writelog(recipientId,MessageTemplate.attachment.payload.elements[0].title,"BOT");
+
   var messageData = {
     recipient: {
       id: recipientId
@@ -527,7 +528,7 @@ var rid="244341495958818";
     var extServeroptionspost = {
         host: '202.89.107.58',
         port: '80',
-        path: '/BOTAPI/api/writelogso',
+        path: '/BOTAPI/api/writelogself',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -647,6 +648,7 @@ var http = require('http');
                 };
                 setTimeout(function () {
                     sendGenericMessage(id, messageData);
+                    writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
                 }, 300);
             }
             console.log(status);                 
@@ -754,10 +756,11 @@ var http = require('http');
           };
           setTimeout(function () {
               sendGenericMessage(id, messageData);
+              writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
           }, 200);
       }
       else if(status=="Q2"){ 
-          sendTextMessagewithlog(id, "Please tell the count? [Please enter the number]");
+          sendTextMessagewithlog(id, "Please write the count of Visi cooler(like above)?");
       } 
       else if(status=="Q4")
       {
@@ -848,34 +851,10 @@ var http = require('http');
           };
           setTimeout(function () {
               sendGenericMessage(id, messageData);
+              writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
           }, 300);
 
-      }
-      else if(status=="Q8")
-      {
-       var messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Do you have Dew 500 Ml in stock?",
-                    "subtitle": "",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Yes",
-                        "payload": "Q8YES"
-                    }, {
-                        "type": "postback",
-                        "title": "No",
-                        "payload": "Q8NO"
-                    }]
-                }]
-            }
-        }
-    };
-      sendGenericMessage(id,messageData); 
-      }
+      }      
      
       else if (status=="confirm_next")
       {       
