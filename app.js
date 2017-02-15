@@ -87,7 +87,7 @@ app.get('/sendmessage', function (req, res) {
         };
         setTimeout(function () {
             sendGenericMessage(req.query['senderid'], messageData);
-            writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
+            writelog(req.query['senderid'], "Do you have any visicooler/fridge/chiller like above?", "BOT");
         }, 300);
     }
 });
