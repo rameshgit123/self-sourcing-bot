@@ -341,12 +341,44 @@ function receivedPostback(event) {
   }  
   else if(payload=="USER_DEFINED_PAYLOAD")
   {
-      fb.api('/' + senderID + '', function (err, data) {
-          if (data) {
-
-              assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS", recipientID);
+      
+      var messageData = {
+          "attachment": {
+              "type": "template",
+              "payload": {
+                  "template_type": "generic",
+                  "elements": [{
+                      "title": "Nielsen Privacy and Consent Notice",
+                      "subtitle": "",
+                      "image_url": "",
+                      "buttons": [{
+                          "type": "web_url",
+                          "url": "https://self-sourcing-bot.herokuapp.com/",
+                          "title": "View Nielsen Privacy"                          
+                      }, {
+                          "type": "postback",
+                          "title": "Agree",
+                          "payload": "Agree"
+                      },
+                      , {
+                          "type": "postback",
+                          "title": "Disagree",
+                          "payload": "Disagree"
+                      }]
+                  }]
+              }
           }
-      });
+      };
+   
+      sendGenericMessage(senderID, messageData);
+    
+      
+      //fb.api('/' + senderID + '', function (err, data) {
+      //    if (data) {
+
+      //        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS", recipientID);
+      //    }
+      //});
 
     
       
