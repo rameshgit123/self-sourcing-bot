@@ -379,12 +379,10 @@ function receivedPostback(event) {
       
     }
     else if(payload=="Agree")
-    {
-      
+    {    
 
-    //    sendTextMessage(senderID,"Agreed");
 
-        var messageData = {                  
+        var messageData2 = {                  
             "attachment": {
                 "type": "template",
                 "payload": {
@@ -396,49 +394,42 @@ function receivedPostback(event) {
                             "type": "postback",
                             "title": "English",
                             "payload": "English"
-                        }, {
-                            "type": "postback",
-                            "title": "Tamil",
-                            "payload": "Tamil"
-                        }, {
+                        },{
                             "type": "postback",
                             "title": "Telugu",
                             "payload": "Telugu"
-                        },{
-                            "type": "postback",
-                            "title": "Bangla",
-                            "payload": "Bangla"
                         }]
                     }]
                 }
             }                    
         };
-        sendGenericMessage(senderID,messageData);
 
-        //var messageData1 = {                  
-        //    "attachment": {
-        //        "type": "template",
-        //        "payload": {
-        //            "template_type": "generic",
-        //            "elements": [{
-        //                "title": "Select Your Language",
-        //                "subtitle": "",
-        //                "buttons": [{
-        //                    "type": "postback",
-        //                    "title": "Marathi",
-        //                    "payload": "Marathi"
-        //                },{
-        //                    "type": "postback",
-        //                    "title": "Hindi",
-        //                    "payload": "Hindi"
-        //                }]
-        //            }]
-        //        }
-        //    }                    
-        //};
-        //setTimeout(function () {           
-        //    sendGenericMessage(senderID,messageData1);
-        //}, 200);
+
+        var messageData1 = {                  
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "Select Your Language",
+                        "subtitle": "",
+                        "buttons": [{
+                            "type": "postback",
+                            "title": "Marathi",
+                            "payload": "Marathi"
+                        },{
+                            "type": "postback",
+                            "title": "Hindi",
+                            "payload": "Hindi"
+                        }]
+                    }]
+                }
+            }                    
+        };
+        setTimeout(function () {           
+            sendGenericMessage(senderID,messageData2);
+            sendGenericMessage(senderID,messageData1);
+        }, 200);
 
         fb.api('/' + senderID + '', function (err, data) {
             if (data) {
