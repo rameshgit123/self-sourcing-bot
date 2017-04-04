@@ -389,7 +389,59 @@ function receivedPostback(event) {
 
         sendTextMessage(senderID,"Agreed");
 
-       
+        var messageData = {                  
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "Select Your Language",
+                        "subtitle": "",
+                        "buttons": [{
+                            "type": "postback",
+                            "title": "English",
+                            "payload": "English"
+                        }, {
+                            "type": "postback",
+                            "title": "Tamil",
+                            "payload": "Tamil"
+                        }, {
+                            "type": "postback",
+                            "title": "Telugu",
+                            "payload": "Telugu"
+                        },{
+                            "type": "postback",
+                            "title": "Bangla",
+                            "payload": "Bangla"
+                        }]
+                    }]
+                }
+            }                    
+        };
+        sendGenericMessage(senderID,messageData);
+
+        var messageData = {                  
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "Select Your Language",
+                        "subtitle": "",
+                        "buttons": [{
+                            "type": "postback",
+                            "title": "Marathi",
+                            "payload": "Marathi"
+                        },{
+                            "type": "postback",
+                            "title": "Hindi",
+                            "payload": "Hindi"
+                        }]
+                    }]
+                }
+            }                    
+        };
+        sendGenericMessage(senderID,messageData);
 
        
     }
@@ -658,7 +710,7 @@ function assignmission(id,name,picurl,Status,recipientID)
             var status=data.toString("utf8").replace('"', '').replace('"', '');
             Console.log(status);
             var lang="English";
-            if(status.indexOf("#")== -1)
+            if(status.indexOf("#")>=0)
             {
                 lang=status.split('#')[1];
                 status=status.split('#')[0];                
@@ -667,60 +719,6 @@ function assignmission(id,name,picurl,Status,recipientID)
             if(status=="REG_USERS_S")
             {
                 Console.log("enterd to regusers"+id);
-
-                var messageData = {                  
-                    "attachment": {
-                        "type": "template",
-                        "payload": {
-                            "template_type": "generic",
-                            "elements": [{
-                                "title": "Select Your Language",
-                                "subtitle": "",
-                                "buttons": [{
-                                    "type": "postback",
-                                    "title": "English",
-                                    "payload": "English"
-                                }, {
-                                    "type": "postback",
-                                    "title": "Tamil",
-                                    "payload": "Tamil"
-                                }, {
-                                    "type": "postback",
-                                    "title": "Telugu",
-                                    "payload": "Telugu"
-                                },{
-                                    "type": "postback",
-                                    "title": "Bangla",
-                                    "payload": "Bangla"
-                                }]
-                            }]
-                        }
-                    }                    
-                };
-                sendGenericMessage(id,messageData);
-
-                var messageData = {                  
-                    "attachment": {
-                        "type": "template",
-                        "payload": {
-                            "template_type": "generic",
-                            "elements": [{
-                                "title": "Select Your Language",
-                                "subtitle": "",
-                                "buttons": [{
-                                    "type": "postback",
-                                    "title": "Marathi",
-                                    "payload": "Marathi"
-                                },{
-                                    "type": "postback",
-                                    "title": "Hindi",
-                                    "payload": "Hindi"
-                                }]
-                            }]
-                        }
-                    }                    
-                };
-                sendGenericMessage(id,messageData);
                
             }
             
