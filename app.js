@@ -389,6 +389,45 @@ function receivedPostback(event) {
 
         sendTextMessage(senderID,"Agreed");
 
+        var messageData = {                  
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "Select Your Language",
+                        "subtitle": "",
+                        "buttons": [{
+                            "type": "postback",
+                            "title": "English",
+                            "payload": "English"
+                        }, {
+                            "type": "postback",
+                            "title": "Tamil",
+                            "payload": "Tamil"
+                        }, {
+                            "type": "postback",
+                            "title": "Telugu",
+                            "payload": "Telugu"
+                        },{
+                            "type": "postback",
+                            "title": "Bangla",
+                            "payload": "Bangla"
+                        },{
+                            "type": "postback",
+                            "title": "Marathi",
+                            "payload": "Marathi"
+                        },{
+                            "type": "postback",
+                            "title": "Hindi",
+                            "payload": "Hindi"
+                        }]
+                    }]
+                }
+            }                    
+        };
+        sendGenericMessage(senderID,messageData);
+
        
     }
     else if(payload=="English")
@@ -665,44 +704,7 @@ function assignmission(id,name,picurl,Status,recipientID)
             if(status=="REG_USERS_S")
             {
                 Console.log("enterd to regusers"+id);
-                var messageData = {                  
-                        "attachment": {
-                            "type": "template",
-                            "payload": {
-                                "template_type": "generic",
-                                "elements": [{
-                                    "title": "Select Your Language",
-                                    "subtitle": "",
-                                    "buttons": [{
-                                        "type": "postback",
-                                        "title": "English",
-                                        "payload": "English"
-                                    }, {
-                                        "type": "postback",
-                                        "title": "Tamil",
-                                        "payload": "Tamil"
-                                    }, {
-                                        "type": "postback",
-                                        "title": "Telugu",
-                                        "payload": "Telugu"
-                                    },{
-                                        "type": "postback",
-                                        "title": "Bangla",
-                                        "payload": "Bangla"
-                                    },{
-                                        "type": "postback",
-                                        "title": "Marathi",
-                                        "payload": "Marathi"
-                                    },{
-                                        "type": "postback",
-                                        "title": "Hindi",
-                                        "payload": "Hindi"
-                                    }]
-                                }]
-                            }
-                        }                    
-                };
-                sendGenericMessage(id,messageData);
+               
             }
             
             if(status=="Q4")
@@ -1186,4 +1188,5 @@ function getParamValuesByName(querystring,q) {
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
+
 module.exports = app;
