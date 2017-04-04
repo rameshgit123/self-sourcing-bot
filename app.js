@@ -373,15 +373,45 @@ function receivedPostback(event) {
         sendGenericMessage(senderID, messageData);
     
       
-        //fb.api('/' + senderID + '', function (err, data) {
-        //    if (data) {
-
-        //        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS", recipientID);
-        //    }
-        //});
+     
 
     
       
+    }
+    else if(payload=="Agree")
+    {
+        fb.api('/' + senderID + '', function (err, data) {
+            if (data) {
+
+                assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS", recipientID);
+            }
+        });
+
+       
+    }
+    else if(payload=="English")
+    {
+        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "English");
+    }
+    else if(payload=="Tamil")
+    {
+        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Tamil");
+    }
+    else if(payload=="Bangla")
+    {
+        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Bangla");
+    }
+    else if(payload=="Marathi")
+    {
+        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Marathi");
+    }
+    else if(payload=="Hindi")
+    {
+        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Hindi");
+    }
+    else if(payload=="Disagree")
+    {
+        sendTextMessage(senderID,"Thank You!");
     }
     else if (payload == "Q4NO") {
 
@@ -622,6 +652,55 @@ function assignmission(id,name,picurl,Status,recipientID)
         res.on('data', function (data) {
             process.stdout.write(data);    
             var status=data.toString("utf8").replace('"', '').replace('"', '');
+            var lang="English";
+            if(status.indexOf("#")== -1)
+            {
+                lang=status.split('#')[1];
+                status=status.split('#')[0];                
+            }
+
+            if(status=="REG_USERS_S")
+            {
+                var messageData = {                  
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "generic",
+                                "elements": [{
+                                    "title": "Select Your Language",
+                                    "subtitle": "",
+                                    "buttons": [{
+                                        "type": "postback",
+                                        "title": "English",
+                                        "payload": "English"
+                                    }, {
+                                        "type": "postback",
+                                        "title": "Tamil",
+                                        "payload": "Tamil"
+                                    }, {
+                                        "type": "postback",
+                                        "title": "Telugu",
+                                        "payload": "Telugu"
+                                    },{
+                                        "type": "postback",
+                                        "title": "Bangla",
+                                        "payload": "Bangla"
+                                    },{
+                                        "type": "postback",
+                                        "title": "Marathi",
+                                        "payload": "Marathi"
+                                    },{
+                                        "type": "postback",
+                                        "title": "Hindi",
+                                        "payload": "Hindi"
+                                    }]
+                                }]
+                            }
+                        }                    
+                };
+                sendGenericMessage(id,messageData);
+            }
+            
             if(status=="Q4")
             {
                 var messageData = {
@@ -654,8 +733,11 @@ function assignmission(id,name,picurl,Status,recipientID)
                 sendTextMessagewithlog(id, "Please write the count of Visi cooler(like above)?");
             }
             else if(status=="REG_USERS"){
+                if(lang=="Telugu")
+                    sendTextMessage(id, "శుభోదయం");
+                else
+                    sendTextMessage(id,"Good Morning!!!");
 
-                sendTextMessage(id, "Good Morning!!!");
                 var messageData = {
                     "attachment": {
                         "type": "template",
