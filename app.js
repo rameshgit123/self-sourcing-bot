@@ -404,7 +404,7 @@ function receivedPostback(event) {
             }                    
         };
 
-
+        //Bangla
         var messageData1 = {                  
             "attachment": {
                 "type": "template",
@@ -414,6 +414,10 @@ function receivedPostback(event) {
                         "title": "Select Your Language",
                         "subtitle": "",
                         "buttons": [{
+                            "type": "postback",
+                            "title": "Bangla",
+                            "payload": "Bangla"
+                        },{
                             "type": "postback",
                             "title": "Marathi",
                             "payload": "Marathi"
