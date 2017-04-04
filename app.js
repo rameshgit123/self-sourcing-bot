@@ -420,7 +420,7 @@ function receivedPostback(event) {
         };
         sendGenericMessage(senderID,messageData);
 
-        var messageData = {                  
+        var messageData1 = {                  
             "attachment": {
                 "type": "template",
                 "payload": {
@@ -441,7 +441,7 @@ function receivedPostback(event) {
                 }
             }                    
         };
-        sendGenericMessage(senderID,messageData);
+        sendGenericMessage(senderID,messageData1);
 
        
     }
