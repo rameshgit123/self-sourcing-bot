@@ -415,30 +415,30 @@ function receivedPostback(event) {
         };
         sendGenericMessage(senderID,messageData);
 
-        var messageData1 = {                  
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [{
-                        "title": "Select Your Language",
-                        "subtitle": "",
-                        "buttons": [{
-                            "type": "postback",
-                            "title": "Marathi",
-                            "payload": "Marathi"
-                        },{
-                            "type": "postback",
-                            "title": "Hindi",
-                            "payload": "Hindi"
-                        }]
-                    }]
-                }
-            }                    
-        };
-        setTimeout(function () {           
-            sendGenericMessage(senderID,messageData1);
-        }, 200);
+        //var messageData1 = {                  
+        //    "attachment": {
+        //        "type": "template",
+        //        "payload": {
+        //            "template_type": "generic",
+        //            "elements": [{
+        //                "title": "Select Your Language",
+        //                "subtitle": "",
+        //                "buttons": [{
+        //                    "type": "postback",
+        //                    "title": "Marathi",
+        //                    "payload": "Marathi"
+        //                },{
+        //                    "type": "postback",
+        //                    "title": "Hindi",
+        //                    "payload": "Hindi"
+        //                }]
+        //            }]
+        //        }
+        //    }                    
+        //};
+        //setTimeout(function () {           
+        //    sendGenericMessage(senderID,messageData1);
+        //}, 200);
 
         fb.api('/' + senderID + '', function (err, data) {
             if (data) {
