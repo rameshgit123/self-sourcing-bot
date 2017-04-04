@@ -449,23 +449,23 @@ function receivedPostback(event) {
     }
     else if(payload=="Telugu")
     {
-        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Telugu");
+        assignmission(senderID, "","", "REG_USERS_Lang", "Telugu");
     }
     else if(payload=="Tamil")
     {
-        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Tamil");
+        assignmission(senderID,"", "", "REG_USERS_Lang", "Tamil");
     }
     else if(payload=="Bangla")
     {
-        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Bangla");
+        assignmission(senderID, "","", "REG_USERS_Lang", "Bangla");
     }
     else if(payload=="Marathi")
     {
-        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Marathi");
+        assignmission(senderID,"", "", "REG_USERS_Lang", "Marathi");
     }
     else if(payload=="Hindi")
     {
-        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Hindi");
+        assignmission(senderID, "", "", "REG_USERS_Lang", "Hindi");
     }
     else if(payload=="Disagree")
     {
