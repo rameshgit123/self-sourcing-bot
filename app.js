@@ -706,85 +706,8 @@ function assignmission(id,name,picurl,Status,recipientID)
         res.on('data', function (data) {
             process.stdout.write(data);    
             var status=data.toString("utf8").replace('"', '').replace('"', '');
-            Console.log(status);
-            var lang="English";
-            if(status.indexOf("#")>=0)
-            {
-                lang=status.split('#')[1];
-                status=status.split('#')[0];                
-            }
-
-            if(status=="REG_USERS_S")
-            {
-                Console.log("enterd to regusers"+id);
-               
-            }
-            
-            if(status=="Q4")
-            {
-                var messageData = {
-                    "attachment": {
-                        "type": "template",
-                        "payload": {
-                            "template_type": "generic",
-                            "elements": [{
-                                "title": "Do you have any company specific area/window like above?",
-                                "subtitle": "",
-                                "image_url": "https://self-sourcing-bot.herokuapp.com/display.jpg",
-                                "buttons": [{
-                                    "type": "postback",
-                                    "title": "Yes",
-                                    "payload": "Q4YES"
-                                }, {
-                                    "type": "postback",
-                                    "title": "No",
-                                    "payload": "Q4NO"
-                                }]
-                            }]
-                        }
-                    }
-                };
-                sendGenericMessage(id,messageData); 
-
-            }
-
-            else if (status == "Q2") {
-                sendTextMessagewithlog(id, "Please write the count of Visi cooler(like above)?");
-            }
-            else if(status=="REG_USERS"){
-                if(lang=="Telugu")
-                    sendTextMessage(id, "శుభోదయం");
-                else
-                    sendTextMessage(id,"Good Morning!!!");
-
-                var messageData = {
-                    "attachment": {
-                        "type": "template",
-                        "payload": {
-                            "template_type": "generic",
-                            "elements": [{
-                                "title": "Do you have any visicooler/fridge/chiller like above?",
-                                "subtitle": "",
-                                "image_url": "https://self-sourcing-bot.herokuapp.com/refridge.jpg",
-                                "buttons": [{
-                                    "type": "postback",
-                                    "title": "Yes",
-                                    "payload": "Q1YES"
-                                }, {
-                                    "type": "postback",
-                                    "title": "No",
-                                    "payload": "Q1NO"
-                                }]
-                            }]
-                        }
-                    }
-                };
-                setTimeout(function () {
-                    sendGenericMessage(id, messageData);
-                    writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
-                }, 300);
-            }
-            console.log(status);                 
+           
+            sendTextMessage(id,status);
         });
     });
 
