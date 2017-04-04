@@ -652,6 +652,7 @@ function assignmission(id,name,picurl,Status,recipientID)
         res.on('data', function (data) {
             process.stdout.write(data);    
             var status=data.toString("utf8").replace('"', '').replace('"', '');
+            Console.log(status);
             var lang="English";
             if(status.indexOf("#")== -1)
             {
@@ -661,6 +662,7 @@ function assignmission(id,name,picurl,Status,recipientID)
 
             if(status=="REG_USERS_S")
             {
+                Console.log("enterd to regusers"+id);
                 var messageData = {                  
                         "attachment": {
                             "type": "template",
