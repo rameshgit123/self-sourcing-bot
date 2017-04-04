@@ -709,9 +709,12 @@ function assignmission(id,name,picurl,Status,recipientID)
     var reqPost = http.request(extServeroptionspost, function (res) {      
         res.on('data', function (data) {
             process.stdout.write(data);    
-            var status=data.toString("utf8").replace('"', '').replace('"', '');
+            var status=data.toString("utf8").replace('"', '').replace('"', '');   
+            var  mesg=status.split('#')[0];
+            var  lang=status.split('#')[1];
+            sendTextMessage(id,mesg+lang);
+
            
-            sendTextMessage(id,status);
         });
     });
 
