@@ -766,16 +766,16 @@ function Q1(title,yes,no,gmesg,id)
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "Do you have any visicooler/fridge/chiller like above?",
+                    "title":title,
                     "subtitle": "",
                     "image_url": "https://self-sourcing-bot.herokuapp.com/refridge.jpg",
                     "buttons": [{
                         "type": "postback",
-                        "title": "Yes",
+                        "title": yes,
                         "payload": "Q1YES"
                     }, {
                         "type": "postback",
-                        "title": "No",
+                        "title":no,
                         "payload": "Q1NO"
                     }]
                 }]
