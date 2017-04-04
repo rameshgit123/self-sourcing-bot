@@ -380,12 +380,14 @@ function receivedPostback(event) {
     }
     else if(payload=="Agree")
     {
-        fb.api('/' + senderID + '', function (err, data) {
-            if (data) {
+        //fb.api('/' + senderID + '', function (err, data) {
+        //    if (data) {
 
-                assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS", recipientID);
-            }
-        });
+        //        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS", recipientID);
+        //    }
+        //});
+
+        sendTextMessage(senderID,"Agreed");
 
        
     }
