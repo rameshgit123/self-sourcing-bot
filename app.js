@@ -710,6 +710,7 @@ function assignmission(id,name,picurl,Status,recipientID)
         res.on('data', function (data) {
             process.stdout.write(data);    
             var status=data.toString("utf8").replace('"', '').replace('"', '');   
+            sendTextMessage(id,status);
             var  mesg=status.split('#')[0];
             var  lang=status.split('#')[1];
             sendTextMessage(id,mesg+lang);
