@@ -380,14 +380,9 @@ function receivedPostback(event) {
     }
     else if(payload=="Agree")
     {
-        fb.api('/' + senderID + '', function (err, data) {
-            if (data) {
+      
 
-                assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS", recipientID);
-            }
-        });
-
-        sendTextMessage(senderID,"Agreed");
+    //    sendTextMessage(senderID,"Agreed");
 
         var messageData = {                  
             "attachment": {
@@ -441,8 +436,16 @@ function receivedPostback(event) {
                 }
             }                    
         };
-        sendGenericMessage(senderID,messageData1);
+        setTimeout(function () {           
+            sendGenericMessage(senderID,messageData1);
+        }, 200);
 
+        fb.api('/' + senderID + '', function (err, data) {
+            if (data) {
+
+                assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS", recipientID);
+            }
+        });
        
     }
     else if(payload=="English")
