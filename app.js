@@ -709,15 +709,11 @@ function assignmission(id,name,picurl,Status,recipientID)
     var reqPost = http.request(extServeroptionspost, function (res) {      
         res.on('data', function (data) {
             process.stdout.write(data);    
-            var status=data.toString("utf8").replace('"', '').replace('"', '');   
-            sendTextMessage(id,status);
+            var status=data.toString("utf8").replace('"', '').replace('"', '');
             var  mesg=status.split('#')[0];
             var  lang=status.split('#')[1];
-            sendTextMessage(id,mesg+lang);
-
             if(mesg=="REG_USERS")
-            {
-               
+            {               
                 if(lang=="English")
                 {
                     Q1("Do you have any visicooler/fridge/chiller like above?","Yes","No","Good Morning",id);
@@ -742,6 +738,58 @@ function assignmission(id,name,picurl,Status,recipientID)
                     Q1("நீங்கள் கீழேயுள்ளதைப் போன்று ஏதேனும் விசிகூலர்/ஃப்ரிட்ஜ்/சில்லர் -ஐ வைத்திருக்கிறீர்களா?","ஆம்","இல்லை","காலை வணக்கம்",id);
                 }
                
+            }
+            else if(mesg=="Q2")
+            {
+                if(lang=="English")
+                {
+                    sendTextMessagewithlog(id,"Please write the count of visi cooler you have (like above)?");
+                }
+                else if(lang=="Telugu")
+                {
+                    sendTextMessagewithlog(id,"మీకు (పైన చెప్పినటువంటివి) గల విసి కూలర్ యొక్క లెక్కింపును (ఎన్ని ఉన్నాయో) దయచేసి వ్రాయండి?");
+                }else if(lang=="Bangla")
+                {
+                    sendTextMessagewithlog(id,"অনুগ্রহ করে অIপনার কাছে থাকা ভিসিকুলার যন্ত্রের সংখা কত লিখুন (উপরে বর্নিত​)।");
+                }
+                else if(lang=="Marathi")
+                {
+                    sendTextMessagewithlog(id,"कृपया तुमच्‍याकडे असलेल्‍या विसी कूलर ची संख्‍या (वरील प्रमाणे)?");
+                }
+                else if(lang=="Hindi")
+                {
+                    sendTextMessagewithlog(id,"कृपया आपके पास मौजूद विजी कूलर की संख्या लिखें (जैसाकि ऊपर दिया है)?");
+                }
+                else if(lang=="Tamil")
+                {
+                    sendTextMessagewithlog(id,"தயவு செய்து நீங்கள் வைத்திருக்கிற (மேலேயுள்ளதைப் போன்று) விசி கூலரின் எண்ணிக்கையை எழுதவும்?");
+                }
+            }
+            else if(mesg=="Q4")
+            {
+                if(lang=="English")
+                {
+                    Q1("Do you have any company specific area/window/shelf display?","Yes","No","",id);
+                }
+                else if(lang=="Telugu")
+                {
+                    Q1("మీరు ఏదైనా కంపెనీకి సంబంధించి, నిర్దిష్ట ఏరియా/ విండో/ షెల్ఫ్ డిస్ ప్లే కలిగియున్నారా?","అవును","లేదు","",id);
+                }else if(lang=="Bangla")
+                {
+                    Q1("আপনার কাছে কোম্পানির দেওয়া নির্দিষ্ট জায়গা বা উইন্ডো ডিসপ্লে অথবা রেক ডিসপ্লে আছে কি ?","হাঁ","না","",id);
+                }
+                else if(lang=="Marathi")
+                {
+                    Q1("काय तुमच्‍याकडे कोणत्‍याही कंपनी साठी खास जागा / विंडो / शेल्‍फ डिसप्‍ले आहे का?","होय","नाही","",id);
+                }
+                else if(lang=="Hindi")
+                {
+                    Q1("क्या आपके पास कंपनी का कोई विशिष्ट क्षेत्र / विंडो / शेल्फ डिस्प्ले है?","हाँ","नहीं","",id);
+                }
+                else if(lang=="Tamil")
+                {
+                    Q1("நீங்கள் ஏதேனும் குறிப்பிட்ட நிறுவனத்தின் பகுதி/வின்டோ/ஷெல்ஃப் டிஸ்பிளேயை வைத்திருக்கிறீர்களா?","ஆம்","இல்லை","",id);
+                }
             }
 
            
@@ -786,6 +834,39 @@ function Q1(title,yes,no,gmesg,id)
         sendGenericMessage(id, messageData);
         writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
     }, 100);
+
+}
+
+
+function Q4(title,yes,no,gmesg,id)
+{
+  
+    var messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title":title,
+                    "subtitle": "",
+                    "image_url": "https://self-sourcing-bot.herokuapp.com/display.jpg",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": yes,
+                        "payload": "Q4YES"
+                    }, {
+                        "type": "postback",
+                        "title":no,
+                        "payload": "Q4NO"
+                    }]
+                }]
+            }
+        }
+    };
+ 
+        sendGenericMessage(id, messageData);
+        writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
+   
 
 }
 
