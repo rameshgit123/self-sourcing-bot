@@ -447,6 +447,10 @@ function receivedPostback(event) {
     {
         assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "English");
     }
+    else if(payload=="Telugu")
+    {
+        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Telugu");
+    }
     else if(payload=="Tamil")
     {
         assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "Tamil");
