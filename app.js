@@ -714,6 +714,35 @@ function assignmission(id,name,picurl,Status,recipientID)
             var  lang=status.split('#')[1];
             sendTextMessage(id,mesg+lang);
 
+            if(mesg=="REG_USERS")
+            {
+               
+                if(lang=="English")
+                {
+                    Q1("Do you have any visicooler/fridge/chiller like above?","Yes","No","Good Morning");
+                }
+                else if(lang=="Telugu")
+                {
+                    Q1("మీకు పైన ఉన్న విసికూలర్/ ఫ్రిజ్ వంటివి ఏమైనా ఉన్నాయా?","అవును","లేదు","శుభోదయం");
+                }else if(lang=="Bangla")
+                {
+                    Q1("নিন্মে বর্নিত যন্ত্রের মধ্যে  ভিসিকুলার, রেফরিজেরেটর অথবা চিলার কোন একটি কি অপনার আছে ?","হাঁ","না","সুপ্রভাত");
+                }
+                else if(lang=="Marathi")
+                {
+                    Q1("तुमच्‍याकडे खाली दिलेल्‍या प्रमाणे कोणतेही विसीकूलर / फ्रिज / चिलर आहे का?","होय","नाही","नमस्‍कार");
+                }
+                else if(lang=="Hindi")
+                {
+                    Q1("क्या आपके पास कोई विजीस्कूलर / फ्रिज / चिलर है जैसाकि नीचे दिया है?","हाँ","नहीं","नमस्‍ते");
+                }
+                else if(lang=="Tamil")
+                {
+                    Q1("நீங்கள் கீழேயுள்ளதைப் போன்று ஏதேனும் விசிகூலர்/ஃப்ரிட்ஜ்/சில்லர் -ஐ வைத்திருக்கிறீர்களா?","ஆம்","இல்லை","காலை வணக்கம்");
+                }
+               
+            }
+
            
         });
     });
@@ -727,7 +756,37 @@ function assignmission(id,name,picurl,Status,recipientID)
     });
 }
 
+function Q1(title,yes,no,gmesg)
+{
+    sendTextMessage(id, gmesg);
+    var messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Do you have any visicooler/fridge/chiller like above?",
+                    "subtitle": "",
+                    "image_url": "https://self-sourcing-bot.herokuapp.com/refridge.jpg",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": "Yes",
+                        "payload": "Q1YES"
+                    }, {
+                        "type": "postback",
+                        "title": "No",
+                        "payload": "Q1NO"
+                    }]
+                }]
+            }
+        }
+    };
+    setTimeout(function () {
+        sendGenericMessage(id, messageData);
+        writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
+    }, 100);
 
+}
 
 function checkstatus(id,text,type,files,imgtext,logo,labels)
 {
