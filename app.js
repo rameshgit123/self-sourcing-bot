@@ -505,6 +505,8 @@ function receivedPostback(event) {
     }
     else if (payload == "Q4YES") {
 
+        sendTextMessage(senderID,"hai");
+
         checkstatus(senderID, "Q4YES", "text", "");
     }
     else if (payload == "Q7NO") {
@@ -830,9 +832,9 @@ function Q1(title,yes,no,gmesg,id)
             }
         }
     };
+    writelog(id, title, "BOT");
     setTimeout(function () {
-        sendGenericMessage(id, messageData);
-        writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
+        sendGenericMessage(id, messageData);      
     }, 100);
 
 }
@@ -865,7 +867,7 @@ function Q4(title,yes,no,gmesg,id)
     };
  
         sendGenericMessage(id, messageData);
-        writelog(id, "Do you have any visicooler/fridge/chiller like above?", "BOT");
+        writelog(id, title, "BOT");
    
 
 }
