@@ -503,9 +503,7 @@ function receivedPostback(event) {
     else if (payload == "confirm_window_count_fail_no") {
         checkstatus(senderID, "confirm_window_count_fail_no", "text", "");
     }
-    else if (payload == "Q4YES") {
-
-        sendTextMessage(senderID,"hai");
+    else if (payload == "Q4YES") {       
 
         checkstatus(senderID, "Q4YES", "text", "");
     }
@@ -634,7 +632,7 @@ function callSendAPI(messageData) {
 //write logfile
 function writelog(sid,message,sendertype)
 {
-    sendTextMessage(sid,message);
+   
 
     var http = require('http');
     var rid="244341495958818";
@@ -644,7 +642,8 @@ function writelog(sid,message,sendertype)
         'message': '' + message + '',
         'rid': ''+rid+''        
     });
-    sendTextMessage(sid,logdetails);
+
+
     //5
     var extServeroptionspost = {
         host: '202.89.107.58',
