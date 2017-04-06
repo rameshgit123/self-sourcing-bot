@@ -634,7 +634,7 @@ function callSendAPI(messageData) {
 //write logfile
 function writelog(sid,message,sendertype)
 {
-
+    sendTextMessage(sid,message);
 
     var http = require('http');
     var rid="244341495958818";
@@ -644,8 +644,7 @@ function writelog(sid,message,sendertype)
         'message': '' + message + '',
         'rid': ''+rid+''        
     });
-
-
+    sendTextMessage(sid,logdetails);
     //5
     var extServeroptionspost = {
         host: '202.89.107.58',
@@ -840,37 +839,7 @@ function Q1(title,yes,no,gmesg,id)
 }
 
 
-function Q4(title,yes,no,gmesg,id)
-{
-  
-    var messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title":title,
-                    "subtitle": "",
-                    "image_url": "https://self-sourcing-bot.herokuapp.com/display.jpg",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": yes,
-                        "payload": "Q4YES"
-                    }, {
-                        "type": "postback",
-                        "title":no,
-                        "payload": "Q4NO"
-                    }]
-                }]
-            }
-        }
-    };
- 
-        sendGenericMessage(id, messageData);
-        writelog(id, title, "BOT");
-   
 
-}
 
 function checkstatus(id,text,type,files,imgtext,logo,labels)
 {
@@ -1384,6 +1353,39 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
 
 }
 
+
+
+function Q4(title,yes,no,gmesg,id)
+{
+  
+    var messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title":title,
+                    "subtitle": "",
+                    "image_url": "https://self-sourcing-bot.herokuapp.com/display.jpg",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": yes,
+                        "payload": "Q4YES"
+                    }, {
+                        "type": "postback",
+                        "title":no,
+                        "payload": "Q4NO"
+                    }]
+                }]
+            }
+        }
+    };
+ 
+    sendGenericMessage(id, messageData);
+    writelog(id, title, "BOT");
+   
+
+}
 
 //read query string
 function getParamValuesByName(querystring,q) {
