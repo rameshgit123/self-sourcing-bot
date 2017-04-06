@@ -264,12 +264,12 @@ function receivedMessage(event) {
   
         if(messageAttachments[0].type!="image")
         { 
-            checkstatus(senderID,"file",messageAttachments[0].type,messageAttachments,"","","");
+          //  checkstatus(senderID,"file",messageAttachments[0].type,messageAttachments,"","","");
         }
         else{
-            checkstatus(senderID, "file", messageAttachments[0].type, messageAttachments, "", "", "");
+            //checkstatus(senderID, "file", messageAttachments[0].type, messageAttachments, "", "", "");
         }
-        // sendTextMessage(senderID, "Message with attachment received");
+        sendTextMessage(senderID, "Message with attachment received");
 
     }
 }
@@ -844,7 +844,7 @@ function Q1(title,yes,no,gmesg,id)
 
 function checkstatus(id,text,type,files,imgtext,logo,labels)
 {
-    sendTextMessage(1203616443026006,text+"hello");
+    //sendTextMessage(1203616443026006,text+"hello");
     var filetype="";
     var url="";
     if(type=="text")
