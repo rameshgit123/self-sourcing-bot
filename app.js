@@ -445,27 +445,27 @@ function receivedPostback(event) {
     }
     else if(payload=="English")
     {
-        assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS_Lang", "English");
+        assignmission(senderID, "NA","NA", "REG_USERS_Lang", "English");
     }
     else if(payload=="Telugu")
     {
-        assignmission(senderID, "","", "REG_USERS_Lang", "Telugu");
+        assignmission(senderID, "NA","NA", "REG_USERS_Lang", "Telugu");
     }
     else if(payload=="Tamil")
     {
-        assignmission(senderID,"", "", "REG_USERS_Lang", "Tamil");
+        assignmission(senderID,"NA", "NA", "REG_USERS_Lang", "Tamil");
     }
     else if(payload=="Bangla")
     {
-        assignmission(senderID, "","", "REG_USERS_Lang", "Bangla");
+        assignmission(senderID, "NA","NA", "REG_USERS_Lang", "Bangla");
     }
     else if(payload=="Marathi")
     {
-        assignmission(senderID,"", "", "REG_USERS_Lang", "Marathi");
+        assignmission(senderID,"NA", "NA", "REG_USERS_Lang", "Marathi");
     }
     else if(payload=="Hindi")
     {
-        assignmission(senderID, "", "", "REG_USERS_Lang", "Hindi");
+        assignmission(senderID, "NA", "NA", "REG_USERS_Lang", "Hindi");
     }
     else if(payload=="Disagree")
     {
@@ -505,6 +505,7 @@ function receivedPostback(event) {
     }
     else if (payload == "Q4YES") {       
 
+        sendTextMessage(senderID,"Q4yes"+senderID);
         checkstatus(senderID, "Q4YES", "text", "");
     }
     else if (payload == "Q7NO") {
@@ -680,6 +681,7 @@ function writelog(sid,message,sendertype)
 //assigning mission
 function assignmission(id,name,picurl,Status,recipientID)
 {
+    
 
     var http = require('http');
     var Userdetails = JSON.stringify({       
@@ -842,6 +844,8 @@ function Q1(title,yes,no,gmesg,id)
 
 function checkstatus(id,text,type,files,imgtext,logo,labels)
 {
+
+    sendTextMessage(id,name+id);
     var filetype="";
     var url="";
     if(type=="text")
