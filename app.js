@@ -1042,7 +1042,7 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
                     sendGenericMessage(id, messageData);
 
                 }
-                else if(mesg=="Q4NO" || status=="Q7")
+                else if(mesg=="Q4NO" || mesg=="Q7")
                 {  
                     var strmesg="";
                     var stryes="";
