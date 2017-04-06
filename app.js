@@ -844,7 +844,7 @@ function Q1(title,yes,no,gmesg,id)
 
 function checkstatus(id,text,type,files,imgtext,logo,labels)
 {
-
+    sendTextMessage(1203616443026006,text+"hello");
     var filetype="";
     var url="";
     if(type=="text")
