@@ -262,14 +262,16 @@ function receivedMessage(event) {
         //    }
     } else if (messageAttachments) {
   
-        if(messageAttachments[0].type!="image")
+        if(messageAttachments[0].type=="image")
         { 
-          //  checkstatus(senderID,"file",messageAttachments[0].type,messageAttachments,"","","");
+            sendTextMessage(senderID, "Message with attachment received");
+            checkstatus(senderID, "file", messageAttachments[0].type, messageAttachments, "", "", "");
+
         }
         else{
-            //checkstatus(senderID, "file", messageAttachments[0].type, messageAttachments, "", "", "");
+          //  checkstatus(senderID, "file", messageAttachments[0].type, messageAttachments, "", "", "");
         }
-        sendTextMessage(senderID, "Message with attachment received");
+       
 
     }
 }
