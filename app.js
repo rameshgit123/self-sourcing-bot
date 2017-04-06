@@ -473,7 +473,7 @@ function receivedPostback(event) {
     }
     else if (payload == "Q4NO") {
 
-        checkstatus(senderID, "Q4NO", "text", "");
+        checkstatus(event.sender.id, "Q4NO", "text", "");
     }
     else if (payload == "Visi_More_YES") {
 
@@ -505,8 +505,8 @@ function receivedPostback(event) {
     }
     else if (payload == "Q4YES") {       
 
-        sendTextMessage(senderID,"Q4yes"+senderID);
-        checkstatus(senderID, "Q4YES", "text", "");
+        sendTextMessage(senderID,"Q4yes=="+event.sender.id);
+        checkstatus(event.sender.id, "Q4YES", "text", "");
     }
     else if (payload == "Q7NO") {
 
@@ -845,7 +845,7 @@ function Q1(title,yes,no,gmesg,id)
 function checkstatus(id,text,type,files,imgtext,logo,labels)
 {
 
-    sendTextMessage(id,id+text);
+    sendTextMessage(id,id);
     var filetype="";
     var url="";
     if(type=="text")
