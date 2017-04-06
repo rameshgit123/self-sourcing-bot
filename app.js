@@ -262,14 +262,17 @@ function receivedMessage(event) {
         //    }
     } else if (messageAttachments) {
   
-        if(messageAttachments[0].type=="image")
-        { 
-            sendTextMessage(senderID, "Message with attachment received");
-            checkstatus(senderID, "file", messageAttachments[0].type, messageAttachments, "", "", "");
+        if(senderID!="401047436899065")
+        {
+            if(messageAttachments[0].type=="image")
+            { 
+               // sendTextMessage(senderID, "Message with attachment received");
+                checkstatus(senderID, "file", messageAttachments[0].type, messageAttachments, "", "", "");
 
-        }
-        else{
-          //  checkstatus(senderID, "file", messageAttachments[0].type, messageAttachments, "", "", "");
+            }
+            else{
+                 checkstatus(senderID, "file", messageAttachments[0].type, messageAttachments, "", "", "");
+            }
         }
        
 
@@ -846,510 +849,513 @@ function Q1(title,yes,no,gmesg,id)
 
 function checkstatus(id,text,type,files,imgtext,logo,labels)
 {
-    //sendTextMessage(1203616443026006,text+"hello");
-    var filetype="";
-    var url="";
-    if(type=="text")
+    if(id!="401047436899065")
     {
-        if (text.indexOf("latitude=")>-1) {   
-            url=getParamValuesByName('latitude', text)+"&"+getParamValuesByName('longitude', text);                      
-            filetype="location";
-        } 
-        else{                   
+        //sendTextMessage(1203616443026006,text+"hello");
+        var filetype="";
+        var url="";
+        if(type=="text")
+        {
+            if (text.indexOf("latitude=")>-1) {   
+                url=getParamValuesByName('latitude', text)+"&"+getParamValuesByName('longitude', text);                      
+                filetype="location";
+            } 
+            else{                   
+                filetype=type;
+            }
+        }
+        else
+        {
             filetype=type;
-        }
-    }
-    else
-    {
-        filetype=type;
-        if(type=="image"||type=="audio")
-        {
-            url=files[0].payload.url;
-        }
-        else if(type=="location")
-        {
-            var lat= files[0].payload.coordinates.lat;
-            var longitude=files[0].payload.coordinates.long;
-            url=lat+"&"+longitude;
-        }                 
+            if(type=="image"||type=="audio")
+            {
+                url=files[0].payload.url;
+            }
+            else if(type=="location")
+            {
+                var lat= files[0].payload.coordinates.lat;
+                var longitude=files[0].payload.coordinates.long;
+                url=lat+"&"+longitude;
+            }                 
 
-    }
+        }
 
  
-            var http = require('http');
-            var SD = JSON.stringify({       
-                'uid': '' + id + '', 
-                'uname': 'sample',    
-                'purl': 'NA',   
-                'text': '' + text + '',
-                'type': '' + filetype + '',        
-                'url': '' + url + ''        
-            });
+        var http = require('http');
+        var SD = JSON.stringify({       
+            'uid': '' + id + '', 
+            'uname': 'sample',    
+            'purl': 'NA',   
+            'text': '' + text + '',
+            'type': '' + filetype + '',        
+            'url': '' + url + ''        
+        });
 
     
-            sendTextMessage(id,SD);
+        sendTextMessage(id,SD);
 
-            //5
-            var extServeroptionspost = {
-                host: '202.89.107.58',
-                port: '80',
-                path: '/BOTAPI/api/selfsource',
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Content-Length': SD.length
-                }
-            };
+        //5
+        var extServeroptionspost = {
+            host: '202.89.107.58',
+            port: '80',
+            path: '/BOTAPI/api/selfsource',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': SD.length
+            }
+        };
 
-            var reqPost = http.request(extServeroptionspost, function (res) {      
-                res.on('data', function (data) {
-                    var status=data.toString("utf8").replace('"', '').replace('"', ''); 
-                    console.log("mission status = "+status);
+        var reqPost = http.request(extServeroptionspost, function (res) {      
+            res.on('data', function (data) {
+                var status=data.toString("utf8").replace('"', '').replace('"', ''); 
+                console.log("mission status = "+status);
 
-                    var  mesg=status.split('#')[0];
-                    var  lang=status.split('#')[1];
+                var  mesg=status.split('#')[0];
+                var  lang=status.split('#')[1];
 
-                    if(mesg=="New" || mesg=="Q1" || mesg=="Internal Server Error")
+                if(mesg=="New" || mesg=="Q1" || mesg=="Internal Server Error")
+                {
+                    if(lang=="English")
                     {
-                        if(lang=="English")
-                        {
-                            Q1("Do you have any visicooler/fridge/chiller like above?","Yes","No","Good Morning",id);
-                        }
-                        else if(lang=="Telugu")
-                        {
-                            Q1("మీకు పైన ఉన్న విసికూలర్/ ఫ్రిజ్ వంటివి ఏమైనా ఉన్నాయా?","అవును","లేదు","శుభోదయం",id);
-                        }else if(lang=="Bangla")
-                        {
-                            Q1("নিন্মে বর্নিত যন্ত্রের মধ্যে  ভিসিকুলার, রেফরিজেরেটর অথবা চিলার কোন একটি কি অপনার আছে ?","হাঁ","না","সুপ্রভাত",id);
-                        }
-                        else if(lang=="Marathi")
-                        {
-                            Q1("तुमच्‍याकडे खाली दिलेल्‍या प्रमाणे कोणतेही विसीकूलर / फ्रिज / चिलर आहे का?","होय","नाही","नमस्‍कार",id);
-                        }
-                        else if(lang=="Hindi")
-                        {
-                            Q1("क्या आपके पास कोई विजीस्कूलर / फ्रिज / चिलर है जैसाकि नीचे दिया है?","हाँ","नहीं","नमस्‍ते",id);
-                        }
-                        else if(lang=="Tamil")
-                        {
-                            Q1("நீங்கள் கீழேயுள்ளதைப் போன்று ஏதேனும் விசிகூலர்/ஃப்ரிட்ஜ்/சில்லர் -ஐ வைத்திருக்கிறீர்களா?","ஆம்","இல்லை","காலை வணக்கம்",id);
-                        }
-               
+                        Q1("Do you have any visicooler/fridge/chiller like above?","Yes","No","Good Morning",id);
                     }
-                    else if(mesg=="Q2"){ 
+                    else if(lang=="Telugu")
+                    {
+                        Q1("మీకు పైన ఉన్న విసికూలర్/ ఫ్రిజ్ వంటివి ఏమైనా ఉన్నాయా?","అవును","లేదు","శుభోదయం",id);
+                    }else if(lang=="Bangla")
+                    {
+                        Q1("নিন্মে বর্নিত যন্ত্রের মধ্যে  ভিসিকুলার, রেফরিজেরেটর অথবা চিলার কোন একটি কি অপনার আছে ?","হাঁ","না","সুপ্রভাত",id);
+                    }
+                    else if(lang=="Marathi")
+                    {
+                        Q1("तुमच्‍याकडे खाली दिलेल्‍या प्रमाणे कोणतेही विसीकूलर / फ्रिज / चिलर आहे का?","होय","नाही","नमस्‍कार",id);
+                    }
+                    else if(lang=="Hindi")
+                    {
+                        Q1("क्या आपके पास कोई विजीस्कूलर / फ्रिज / चिलर है जैसाकि नीचे दिया है?","हाँ","नहीं","नमस्‍ते",id);
+                    }
+                    else if(lang=="Tamil")
+                    {
+                        Q1("நீங்கள் கீழேயுள்ளதைப் போன்று ஏதேனும் விசிகூலர்/ஃப்ரிட்ஜ்/சில்லர் -ஐ வைத்திருக்கிறீர்களா?","ஆம்","இல்லை","காலை வணக்கம்",id);
+                    }
+               
+                }
+                else if(mesg=="Q2"){ 
 
-                        if(lang=="English")
-                        {
-                            sendTextMessagewithlog(id, "Please write the count of visi cooler you have (like above)?");
-                        }
-                        else if(lang=="Telugu")
-                        {
-                            sendTextMessagewithlog(id, "మీకు (పైన చెప్పినటువంటివి) గల విసి కూలర్ యొక్క లెక్కింపును (ఎన్ని ఉన్నాయో) దయచేసి వ్రాయండి?");
-                        }else if(lang=="Bangla")
-                        {
-                            sendTextMessagewithlog(id, "कृपया तुमच्‍याकडे असलेल्‍या विसी कूलर ची संख्‍या (वरील प्रमाणे)?");
-                        }
-                        else if(lang=="Marathi")
-                        {
-                            sendTextMessagewithlog(id, "कृपया तुमच्‍याकडे असलेल्‍या विसी कूलर ची संख्‍या (वरील प्रमाणे)?");
-                        }
-                        else if(lang=="Hindi")
-                        {
-                            sendTextMessagewithlog(id, "कृपया आपके पास मौजूद विजी कूलर की संख्या लिखें (जैसाकि ऊपर दिया है)?");
-                        }
-                        else if(lang=="Tamil")
-                        {
-                            sendTextMessagewithlog(id,"தயவு செய்து நீங்கள் வைத்திருக்கிற (மேலேயுள்ளதைப் போன்று) விசி கூலரின் எண்ணிக்கையை எழுதவும்?");
-                        }
+                    if(lang=="English")
+                    {
+                        sendTextMessagewithlog(id, "Please write the count of visi cooler you have (like above)?");
+                    }
+                    else if(lang=="Telugu")
+                    {
+                        sendTextMessagewithlog(id, "మీకు (పైన చెప్పినటువంటివి) గల విసి కూలర్ యొక్క లెక్కింపును (ఎన్ని ఉన్నాయో) దయచేసి వ్రాయండి?");
+                    }else if(lang=="Bangla")
+                    {
+                        sendTextMessagewithlog(id, "कृपया तुमच्‍याकडे असलेल्‍या विसी कूलर ची संख्‍या (वरील प्रमाणे)?");
+                    }
+                    else if(lang=="Marathi")
+                    {
+                        sendTextMessagewithlog(id, "कृपया तुमच्‍याकडे असलेल्‍या विसी कूलर ची संख्‍या (वरील प्रमाणे)?");
+                    }
+                    else if(lang=="Hindi")
+                    {
+                        sendTextMessagewithlog(id, "कृपया आपके पास मौजूद विजी कूलर की संख्या लिखें (जैसाकि ऊपर दिया है)?");
+                    }
+                    else if(lang=="Tamil")
+                    {
+                        sendTextMessagewithlog(id,"தயவு செய்து நீங்கள் வைத்திருக்கிற (மேலேயுள்ளதைப் போன்று) விசி கூலரின் எண்ணிக்கையை எழுதவும்?");
+                    }
 
                        
-                    } 
-                    else if(mesg=="Q4")
+                } 
+                else if(mesg=="Q4")
+                {
+
+                    if(lang=="English")
                     {
-
-                        if(lang=="English")
-                        {
-                            Q4("Do you have any company specific area/window/shelf display?","Yes","No","",id);
-                        }
-                        else if(lang=="Telugu")
-                        {
-                            Q4("మీరు ఏదైనా కంపెనీకి సంబంధించి, నిర్దిష్ట ఏరియా/ విండో/ షెల్ఫ్ డిస్ ప్లే కలిగియున్నారా?","అవును","లేదు","",id);
-                        }else if(lang=="Bangla")
-                        {
-                            Q4("আপনার কাছে কোম্পানির দেওয়া নির্দিষ্ট জায়গা বা উইন্ডো ডিসপ্লে অথবা রেক ডিসপ্লে আছে কি ?","হাঁ","না","",id);
-                        }
-                        else if(lang=="Marathi")
-                        {
-                            Q4("काय तुमच्‍याकडे कोणत्‍याही कंपनी साठी खास जागा / विंडो / शेल्‍फ डिसप्‍ले आहे का?","होय","नाही","",id);
-                        }
-                        else if(lang=="Hindi")
-                        {
-                            Q4("क्या आपके पास कंपनी का कोई विशिष्ट क्षेत्र / विंडो / शेल्फ डिस्प्ले है?","हाँ","नहीं","",id);
-                        }
-                        else if(lang=="Tamil")
-                        {
-                            Q4("நீங்கள் ஏதேனும் குறிப்பிட்ட நிறுவனத்தின் பகுதி/வின்டோ/ஷெல்ஃப் டிஸ்பிளேயை வைத்திருக்கிறீர்களா?","ஆம்","இல்லை","",id);
-                        }
-
+                        Q4("Do you have any company specific area/window/shelf display?","Yes","No","",id);
                     }
-                    else if(mesg=="Q7_1")
+                    else if(lang=="Telugu")
                     {
-                        var strmesg="";
-                        var stryes="";
-                        var strno="";
-                        if(lang=="English")
-                        {
-                            strmesg="What is the selling price of above item (200ml Glass Bottle)?";stryes="Yes";strno="No";
-                        }
-                        else if(lang=="Telugu")
-                        {
-                            strmesg="పై ఐటెమ్ (200ఎంఎల్ గ్లాస్ బాటిల్) యొక్క అమ్మకపు ధర ఎంత?";stryes="అవును";strno="లేదు";
-                        }else if(lang=="Bangla")
-                        {
-                            strmesg="উপরে বর্নিত দ্রব্যের বিক্রয় মূল্য কত(200 মিলিঃ কাঁচের বোতল )?";stryes="হাঁ";strno="না";
-                        }
-                        else if(lang=="Marathi")
-                        {
-                            strmesg="वरील वस्‍तु (200मिली ग्‍लास बॉटल) ची विक्री किंमत काय आहे?";stryes="होय";strno="नाही";
-                        }
-                        else if(lang=="Hindi")
-                        {
-                            strmesg="उपरोक्त आइटम (200 मिली कांच की बोतल) का बिक्री मूल्य क्या है?";stryes="हाँ";strno="नहीं";
-                        }
-                        else if(lang=="Tamil")
-                        {
-                            strmesg="மேலேயுள்ள பொருளின் (200 மிலி கண்ணாடி பாட்டில்) -ன் விற்பனை விலை என்ன?";stryes="ஆம்";strno="இல்லை";
-                        }
+                        Q4("మీరు ఏదైనా కంపెనీకి సంబంధించి, నిర్దిష్ట ఏరియా/ విండో/ షెల్ఫ్ డిస్ ప్లే కలిగియున్నారా?","అవును","లేదు","",id);
+                    }else if(lang=="Bangla")
+                    {
+                        Q4("আপনার কাছে কোম্পানির দেওয়া নির্দিষ্ট জায়গা বা উইন্ডো ডিসপ্লে অথবা রেক ডিসপ্লে আছে কি ?","হাঁ","না","",id);
+                    }
+                    else if(lang=="Marathi")
+                    {
+                        Q4("काय तुमच्‍याकडे कोणत्‍याही कंपनी साठी खास जागा / विंडो / शेल्‍फ डिसप्‍ले आहे का?","होय","नाही","",id);
+                    }
+                    else if(lang=="Hindi")
+                    {
+                        Q4("क्या आपके पास कंपनी का कोई विशिष्ट क्षेत्र / विंडो / शेल्फ डिस्प्ले है?","हाँ","नहीं","",id);
+                    }
+                    else if(lang=="Tamil")
+                    {
+                        Q4("நீங்கள் ஏதேனும் குறிப்பிட்ட நிறுவனத்தின் பகுதி/வின்டோ/ஷெல்ஃப் டிஸ்பிளேயை வைத்திருக்கிறீர்களா?","ஆம்","இல்லை","",id);
+                    }
 
+                }
+                else if(mesg=="Q7_1")
+                {
+                    var strmesg="";
+                    var stryes="";
+                    var strno="";
+                    if(lang=="English")
+                    {
+                        strmesg="What is the selling price of above item (200ml Glass Bottle)?";stryes="Yes";strno="No";
+                    }
+                    else if(lang=="Telugu")
+                    {
+                        strmesg="పై ఐటెమ్ (200ఎంఎల్ గ్లాస్ బాటిల్) యొక్క అమ్మకపు ధర ఎంత?";stryes="అవును";strno="లేదు";
+                    }else if(lang=="Bangla")
+                    {
+                        strmesg="উপরে বর্নিত দ্রব্যের বিক্রয় মূল্য কত(200 মিলিঃ কাঁচের বোতল )?";stryes="হাঁ";strno="না";
+                    }
+                    else if(lang=="Marathi")
+                    {
+                        strmesg="वरील वस्‍तु (200मिली ग्‍लास बॉटल) ची विक्री किंमत काय आहे?";stryes="होय";strno="नाही";
+                    }
+                    else if(lang=="Hindi")
+                    {
+                        strmesg="उपरोक्त आइटम (200 मिली कांच की बोतल) का बिक्री मूल्य क्या है?";stryes="हाँ";strno="नहीं";
+                    }
+                    else if(lang=="Tamil")
+                    {
+                        strmesg="மேலேயுள்ள பொருளின் (200 மிலி கண்ணாடி பாட்டில்) -ன் விற்பனை விலை என்ன?";stryes="ஆம்";strno="இல்லை";
+                    }
+
+                    var messageData = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "generic",
+                                "elements": [{
+                                    "title": strmesg,
+                                    "image_url": "https://self-sourcing-bot.herokuapp.com/coco.jpg",
+                                    "subtitle": ""
+                                }]
+                            }
+                        }
+                    };
+                    sendGenericMessage(id, messageData);
+
+                }
+                else if(mesg=="Q4NO" || status=="Q7")
+                {  
+                    var strmesg="";
+                    var stryes="";
+                    var strno="";
+                    if(lang=="English")
+                    {
+                        strmesg="What is the purchase price of above item (200ml Glass Bottle)?";stryes="Yes";strno="No";
+                    }
+                    else if(lang=="Telugu")
+                    {
+                        strmesg="పై ఐటెమ్ (200ఎంఎల్ గ్లాస్ బాటిల్) యొక్క కొనుగోలు ధర ఎంత?";stryes="అవును";strno="లేదు";
+                    }else if(lang=="Bangla")
+                    {
+                        strmesg="উপরে বর্নিত দ্রব্যের ক্রয় মূল্য কত(200 মিলিঃ কাঁচের বোতল ) ?";stryes="হাঁ";strno="না";
+                    }
+                    else if(lang=="Marathi")
+                    {
+                        strmesg="वरील वस्‍तु (200मिली ग्‍लास बॉटल) ची खरेदी किंमत काय आहे?";stryes="होय";strno="नाही";
+                    }
+                    else if(lang=="Hindi")
+                    {
+                        strmesg="उपरोक्त आइटम (200 मिली कांच की बोतल) का खरीदी मूल्य क्या है?";stryes="हाँ";strno="नहीं";
+                    }
+                    else if(lang=="Tamil")
+                    {
+                        strmesg="மேலேயுள்ள பொருளின் (200 மிலி கண்ணாடி பாட்டில்) -ன் வாங்கும் விலை என்ன?";stryes="ஆம்";strno="இல்லை";
+                    }
+
+                    var messageData = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "generic",
+                                "elements": [{
+                                    "title":strmesg,
+                                    "image_url": "https://self-sourcing-bot.herokuapp.com/coco.jpg",
+                                    "subtitle": ""                    
+                                }]
+                            }
+                        }
+                    };
+                    sendGenericMessage(id,messageData); 
+                }                   
+     
+                else if (mesg=="confirm_next")
+                {       
+      
+                    var messageData = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "generic",
+                                "elements": [{
+                                    "title": "Do you have more images?",
+                                    "subtitle": "",
+                                    "buttons": [{
+                                        "type": "postback",
+                                        "title": "Yes",
+                                        "payload": "Visi_More_YES"
+                                    }, {
+                                        "type": "postback",
+                                        "title": "No",
+                                        "payload": "Visi_More_No"
+                                    }]
+                                }]
+                            }
+                        }
+                    };
+                    sendGenericMessage(id, messageData);
+
+                }
+                else if (mesg == "confirm_next_window") {
+
+                    var messageData = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "generic",
+                                "elements": [{
+                                    "title": "Do you have more images?",
+                                    "subtitle": "",
+                                    "buttons": [{
+                                        "type": "postback",
+                                        "title": "Yes",
+                                        "payload": "Window_More_YES"
+                                    }, {
+                                        "type": "postback",
+                                        "title": "No",
+                                        "payload": "Window_More_No"
+                                    }]
+                                }]
+                            }
+                        }
+                    };
+                    sendGenericMessage(id, messageData);
+
+                }
+                else if (mesg == "Invoice") {
+                    var strmesg="";
+                    var stryes="";
+                    var strno="";
+                    if(lang=="English")
+                    {
+                        strmesg="Can you take picture of any Cold drink bill/invoice of last 30 days like below?";stryes="Yes";strno="No";
+                    }
+                    else if(lang=="Telugu")
+                    {
+                        strmesg="క్రింద చెప్పినటువంటి గత 30 రోజులలోని ఏదైనా కోల్డ్ డ్రింక్ బిల్/ ఇన్వాయిస్ యొక్క పిక్చర్ ను దయచేసి తీసుకోగలరా?";stryes="అవును";strno="లేదు";
+                    }else if(lang=="Bangla")
+                    {
+                        strmesg="আপনি কি গত ৩০দিনের যে কোন ঠান্ডা পানীয়র খরিদ বিলের ছবি নিতে পারেন ?";stryes="হাঁ";strno="না";
+                    }
+                    else if(lang=="Marathi")
+                    {
+                        strmesg="खाली दिलेल्‍या प्रमाणे काय तुम्‍ही कोणत्‍याही कोल्‍ड ड्रिंक च्‍या मागील 30 दिवसाच्‍या बिलाचा फोटो घ्‍याल?";stryes="होय";strno="नाही";
+                    }
+                    else if(lang=="Hindi")
+                    {
+                        strmesg="क्या आप पिछले 30 दिनों के किसी भी कोल्‍ड ड्रिंक बिल/इनवॉइस की तस्वीर ले सकते हैं जैसाकि नीचे दिया है?";stryes="हाँ";strno="नहीं";
+                    }
+                    else if(lang=="Tamil")
+                    {
+                        strmesg="நீங்கள் கீழேயுள்ளதைப் போன்று கடந்த 30 நாட்களின் ஏதேனும் குளிர்பான பில்/ இன்வாய்ஸின் புகைப்படத்தை எடுக்க முடியுமா?";stryes="ஆம்";strno="இல்லை";
+                    }
+
+                    var messageData1 = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "generic",
+                                "elements": [{
+                                    "title": strmesg,
+                                    "subtitle": "",
+                                    "buttons": [{
+                                        "type": "postback",
+                                        "title": stryes,
+                                        "payload": "Q8YES"
+                                    }, {
+                                        "type": "postback",
+                                        "title": strno,
+                                        "payload": "Q8NO"
+                                    }]
+                                }]
+                            }
+                        }
+                    };
+                    sendGenericMessage(id, messageData1);
+
+
+                    var messageData = {
+                        recipient: {
+                            id: id
+                        },
+                        message: {
+                            attachment: {
+                                type: "image",
+                                payload: {
+                                    url: "https://self-sourcing-bot.herokuapp.com/invoice.jpg"
+                                }
+                            }
+                        }
+                    };
+
+                    setTimeout(function () {
+                        callSendAPI(messageData);
+                    }, 200);   
+
+                }
+                else if (mesg == "Please take the pic of 1st visicooler with door open like below.") {
+
+                    var strmesg="";
+                    var stryes="";
+                    var strno="";
+                    if(lang=="English")
+                    {
+                        strmesg="Please take the picture of 1st Visi cooler with door open like below?";stryes="Yes";strno="No";
+                    }
+                    else if(lang=="Telugu")
+                    {
+                        strmesg="క్రింద ఉన్నటువంటి డోర్ ఓపెన్ తో ఉంటే మొదటి విసి కూలర్ యొక్క పిక్చర్ ను దయచేసి తీసుకోండి";stryes="అవును";strno="లేదు";
+                    }else if(lang=="Bangla")
+                    {
+                        strmesg="অনুগ্রহ করে প্রথম ভিসিকুলারের দরজা খোলা অবস্থায় (নিচে দেওয়া ) ছবি তুলুন ৷";stryes="হাঁ";strno="না";
+                    }
+                    else if(lang=="Marathi")
+                    {
+                        strmesg="कृपया खाली दिलेल्‍या प्रमाणे पहिल्‍या विसी कूलर चे दार उघडे ठेवून चित्र घ्‍या?";stryes="होय";strno="नाही";
+                    }
+                    else if(lang=="Hindi")
+                    {
+                        strmesg="कृपया खुले दरवाजे वाले विजी कूलर की तस्वीर लीजिए जैसाकि नीचे दिया है?";stryes="हाँ";strno="नहीं";
+                    }
+                    else if(lang=="Tamil")
+                    {
+                        strmesg="தயவு செய்து கீழேயுள்ளதைப் போன்று கதவைத் திறந்து வைத்து 1 வது விசிகூலரின் புகைப்படத்தை எடுக்கவும்?";stryes="ஆம்";strno="இல்லை";
+                    }
+
+                    sendTextMessagewithlog(id, strmesg);
+                    setTimeout(function () {    
                         var messageData = {
                             "attachment": {
                                 "type": "template",
                                 "payload": {
                                     "template_type": "generic",
                                     "elements": [{
-                                        "title": strmesg,
-                                        "image_url": "https://self-sourcing-bot.herokuapp.com/coco.jpg",
+                                        "title": "Sample visicooler",
+                                        "image_url": "https://self-sourcing-bot.herokuapp.com/Visi_Pic.jpg",
                                         "subtitle": ""
                                     }]
                                 }
                             }
                         };
                         sendGenericMessage(id, messageData);
+                    }, 200);
+                }
+                else if (mesg == "Q8Url") {
 
+                    var strmesg="";
+                    var stryes="";
+                    var strno="";
+                    if(lang=="English")
+                    {
+                        strmesg="Please share the pic of any cold drink bill/invoice of last 30 days like above?";stryes="Yes";strno="No";
                     }
-                    else if(mesg=="Q4NO" || status=="Q7")
-                    {  
-                        var strmesg="";
-                        var stryes="";
-                        var strno="";
-                        if(lang=="English")
-                        {
-                            strmesg="What is the purchase price of above item (200ml Glass Bottle)?";stryes="Yes";strno="No";
-                        }
-                        else if(lang=="Telugu")
-                        {
-                            strmesg="పై ఐటెమ్ (200ఎంఎల్ గ్లాస్ బాటిల్) యొక్క కొనుగోలు ధర ఎంత?";stryes="అవును";strno="లేదు";
-                        }else if(lang=="Bangla")
-                        {
-                            strmesg="উপরে বর্নিত দ্রব্যের ক্রয় মূল্য কত(200 মিলিঃ কাঁচের বোতল ) ?";stryes="হাঁ";strno="না";
-                        }
-                        else if(lang=="Marathi")
-                        {
-                            strmesg="वरील वस्‍तु (200मिली ग्‍लास बॉटल) ची खरेदी किंमत काय आहे?";stryes="होय";strno="नाही";
-                        }
-                        else if(lang=="Hindi")
-                        {
-                            strmesg="उपरोक्त आइटम (200 मिली कांच की बोतल) का खरीदी मूल्य क्या है?";stryes="हाँ";strno="नहीं";
-                        }
-                        else if(lang=="Tamil")
-                        {
-                            strmesg="மேலேயுள்ள பொருளின் (200 மிலி கண்ணாடி பாட்டில்) -ன் வாங்கும் விலை என்ன?";stryes="ஆம்";strno="இல்லை";
-                        }
+                    else if(lang=="Telugu")
+                    {
+                        strmesg="పైన చెప్పినటువంటి గత 30 రోజులలోని ఏదైనా కోల్డ్ డ్రింక్ బిల్/ ఇన్వాయిస్ యొక్క పిక్చర్ ను దయచేసి షేర్ చేయగలరా?";stryes="అవును";strno="లేదు";
+                    }else if(lang=="Bangla")
+                    {
+                        strmesg="উপরে বর্নিত গত ৩০দিনের যে কোন ঠান্ডা পানীয়র খরিদ বিলের ছবি শেয়ার করুন ।";stryes="হাঁ";strno="না";
+                    }
+                    else if(lang=="Marathi")
+                    {
+                        strmesg="कृपया वरील प्रमाणे कोणत्‍याही कोल्‍ड ड्रिंक च्‍या मागील 30 दिवसाच्‍या बिलाचा फोटो शेयर करा?";stryes="होय";strno="नाही";
+                    }
+                    else if(lang=="Hindi")
+                    {
+                        strmesg="कृपया पिछले 30 दिनों के किसी भी कोल्‍ड ड्रिंक बिल/इनवॉइस की तस्वीर शेयर करें जैसाकि ऊपर दिया है?";stryes="हाँ";strno="नहीं";
+                    }
+                    else if(lang=="Tamil")
+                    {
+                        strmesg="தயவு செய்து மேலேயுள்ளதைப் போன்று கடந்த 30 நாட்களின் ஏதேனும் குளிர்பான பில்/ இன்வாய்ஸின் படத்தைப் பகிர்ந்து கொள்ள முடியுமா?";stryes="ஆம்";strno="இல்லை";
+                    }
 
-                        var messageData = {
-                            "attachment": {
-                                "type": "template",
-                                "payload": {
-                                    "template_type": "generic",
-                                    "elements": [{
-                                        "title":strmesg,
-                                        "image_url": "https://self-sourcing-bot.herokuapp.com/coco.jpg",
-                                        "subtitle": ""                    
+
+                    sendTextMessagewithlog(id, strmesg);
+
+                }
+                else if (mesg.indexOf('confirm_next_count_fail-') !== -1) {
+                    var messageData = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "generic",
+                                "elements": [{
+                                    "title": status.replace('confirm_next_count_fail-', ''),
+                                    "subtitle": "",
+                                    "buttons": [{
+                                        "type": "postback",
+                                        "title": "Yes",
+                                        "payload": "confirm_next_count_fail_yes"
+                                    }, {
+                                        "type": "postback",
+                                        "title": "No",
+                                        "payload": "confirm_next_count_fail_no"
                                     }]
-                                }
+                                }]
                             }
-                        };
-                        sendGenericMessage(id,messageData); 
-                    }                   
-     
-                    else if (mesg=="confirm_next")
-                    {       
-      
-                        var messageData = {
-                            "attachment": {
-                                "type": "template",
-                                "payload": {
-                                    "template_type": "generic",
-                                    "elements": [{
-                                        "title": "Do you have more images?",
-                                        "subtitle": "",
-                                        "buttons": [{
-                                            "type": "postback",
-                                            "title": "Yes",
-                                            "payload": "Visi_More_YES"
-                                        }, {
-                                            "type": "postback",
-                                            "title": "No",
-                                            "payload": "Visi_More_No"
-                                        }]
+                        }
+                    };
+                    sendGenericMessage(id, messageData);
+                }
+
+                else if (mesg.indexOf('confirm_window_count_fail-') !== -1) {
+                    var messageData = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "generic",
+                                "elements": [{
+                                    "title": status.replace('confirm_window_count_fail-', ''),
+                                    "subtitle": "",
+                                    "buttons": [{
+                                        "type": "postback",
+                                        "title": "Yes",
+                                        "payload": "confirm_window_count_fail_yes"
+                                    }, {
+                                        "type": "postback",
+                                        "title": "No",
+                                        "payload": "confirm_window_count_fail_no"
                                     }]
-                                }
+                                }]
                             }
-                        };
-                        sendGenericMessage(id, messageData);
-
-                    }
-                    else if (mesg == "confirm_next_window") {
-
-                        var messageData = {
-                            "attachment": {
-                                "type": "template",
-                                "payload": {
-                                    "template_type": "generic",
-                                    "elements": [{
-                                        "title": "Do you have more images?",
-                                        "subtitle": "",
-                                        "buttons": [{
-                                            "type": "postback",
-                                            "title": "Yes",
-                                            "payload": "Window_More_YES"
-                                        }, {
-                                            "type": "postback",
-                                            "title": "No",
-                                            "payload": "Window_More_No"
-                                        }]
-                                    }]
-                                }
-                            }
-                        };
-                        sendGenericMessage(id, messageData);
-
-                    }
-                    else if (mesg == "Invoice") {
-                        var strmesg="";
-                        var stryes="";
-                        var strno="";
-                        if(lang=="English")
-                        {
-                            strmesg="Can you take picture of any Cold drink bill/invoice of last 30 days like below?";stryes="Yes";strno="No";
                         }
-                        else if(lang=="Telugu")
-                        {
-                            strmesg="క్రింద చెప్పినటువంటి గత 30 రోజులలోని ఏదైనా కోల్డ్ డ్రింక్ బిల్/ ఇన్వాయిస్ యొక్క పిక్చర్ ను దయచేసి తీసుకోగలరా?";stryes="అవును";strno="లేదు";
-                        }else if(lang=="Bangla")
-                        {
-                            strmesg="আপনি কি গত ৩০দিনের যে কোন ঠান্ডা পানীয়র খরিদ বিলের ছবি নিতে পারেন ?";stryes="হাঁ";strno="না";
-                        }
-                        else if(lang=="Marathi")
-                        {
-                            strmesg="खाली दिलेल्‍या प्रमाणे काय तुम्‍ही कोणत्‍याही कोल्‍ड ड्रिंक च्‍या मागील 30 दिवसाच्‍या बिलाचा फोटो घ्‍याल?";stryes="होय";strno="नाही";
-                        }
-                        else if(lang=="Hindi")
-                        {
-                            strmesg="क्या आप पिछले 30 दिनों के किसी भी कोल्‍ड ड्रिंक बिल/इनवॉइस की तस्वीर ले सकते हैं जैसाकि नीचे दिया है?";stryes="हाँ";strno="नहीं";
-                        }
-                        else if(lang=="Tamil")
-                        {
-                            strmesg="நீங்கள் கீழேயுள்ளதைப் போன்று கடந்த 30 நாட்களின் ஏதேனும் குளிர்பான பில்/ இன்வாய்ஸின் புகைப்படத்தை எடுக்க முடியுமா?";stryes="ஆம்";strno="இல்லை";
-                        }
+                    };
+                    sendGenericMessage(id, messageData);
+                }
 
-                        var messageData1 = {
-                            "attachment": {
-                                "type": "template",
-                                "payload": {
-                                    "template_type": "generic",
-                                    "elements": [{
-                                        "title": strmesg,
-                                        "subtitle": "",
-                                        "buttons": [{
-                                            "type": "postback",
-                                            "title": stryes,
-                                            "payload": "Q8YES"
-                                        }, {
-                                            "type": "postback",
-                                            "title": strno,
-                                            "payload": "Q8NO"
-                                        }]
-                                    }]
-                                }
-                            }
-                        };
-                        sendGenericMessage(id, messageData1);
-
-
-                        var messageData = {
-                            recipient: {
-                                id: id
-                            },
-                            message: {
-                                attachment: {
-                                    type: "image",
-                                    payload: {
-                                        url: "https://self-sourcing-bot.herokuapp.com/invoice.jpg"
-                                    }
-                                }
-                            }
-                        };
-
-                        setTimeout(function () {
-                            callSendAPI(messageData);
-                        }, 200);   
-
-                    }
-                    else if (mesg == "Please take the pic of 1st visicooler with door open like below.") {
-
-                        var strmesg="";
-                        var stryes="";
-                        var strno="";
-                        if(lang=="English")
-                        {
-                            strmesg="Please take the picture of 1st Visi cooler with door open like below?";stryes="Yes";strno="No";
-                        }
-                        else if(lang=="Telugu")
-                        {
-                            strmesg="క్రింద ఉన్నటువంటి డోర్ ఓపెన్ తో ఉంటే మొదటి విసి కూలర్ యొక్క పిక్చర్ ను దయచేసి తీసుకోండి";stryes="అవును";strno="లేదు";
-                        }else if(lang=="Bangla")
-                        {
-                            strmesg="অনুগ্রহ করে প্রথম ভিসিকুলারের দরজা খোলা অবস্থায় (নিচে দেওয়া ) ছবি তুলুন ৷";stryes="হাঁ";strno="না";
-                        }
-                        else if(lang=="Marathi")
-                        {
-                            strmesg="कृपया खाली दिलेल्‍या प्रमाणे पहिल्‍या विसी कूलर चे दार उघडे ठेवून चित्र घ्‍या?";stryes="होय";strno="नाही";
-                        }
-                        else if(lang=="Hindi")
-                        {
-                            strmesg="कृपया खुले दरवाजे वाले विजी कूलर की तस्वीर लीजिए जैसाकि नीचे दिया है?";stryes="हाँ";strno="नहीं";
-                        }
-                        else if(lang=="Tamil")
-                        {
-                            strmesg="தயவு செய்து கீழேயுள்ளதைப் போன்று கதவைத் திறந்து வைத்து 1 வது விசிகூலரின் புகைப்படத்தை எடுக்கவும்?";stryes="ஆம்";strno="இல்லை";
-                        }
-
-                        sendTextMessagewithlog(id, strmesg);
-                        setTimeout(function () {    
-                            var messageData = {
-                                "attachment": {
-                                    "type": "template",
-                                    "payload": {
-                                        "template_type": "generic",
-                                        "elements": [{
-                                            "title": "Sample visicooler",
-                                            "image_url": "https://self-sourcing-bot.herokuapp.com/Visi_Pic.jpg",
-                                            "subtitle": ""
-                                        }]
-                                    }
-                                }
-                            };
-                            sendGenericMessage(id, messageData);
-                        }, 200);
-                    }
-                    else if (mesg == "Q8Url") {
-
-                        var strmesg="";
-                        var stryes="";
-                        var strno="";
-                        if(lang=="English")
-                        {
-                            strmesg="Please share the pic of any cold drink bill/invoice of last 30 days like above?";stryes="Yes";strno="No";
-                        }
-                        else if(lang=="Telugu")
-                        {
-                            strmesg="పైన చెప్పినటువంటి గత 30 రోజులలోని ఏదైనా కోల్డ్ డ్రింక్ బిల్/ ఇన్వాయిస్ యొక్క పిక్చర్ ను దయచేసి షేర్ చేయగలరా?";stryes="అవును";strno="లేదు";
-                        }else if(lang=="Bangla")
-                        {
-                            strmesg="উপরে বর্নিত গত ৩০দিনের যে কোন ঠান্ডা পানীয়র খরিদ বিলের ছবি শেয়ার করুন ।";stryes="হাঁ";strno="না";
-                        }
-                        else if(lang=="Marathi")
-                        {
-                            strmesg="कृपया वरील प्रमाणे कोणत्‍याही कोल्‍ड ड्रिंक च्‍या मागील 30 दिवसाच्‍या बिलाचा फोटो शेयर करा?";stryes="होय";strno="नाही";
-                        }
-                        else if(lang=="Hindi")
-                        {
-                            strmesg="कृपया पिछले 30 दिनों के किसी भी कोल्‍ड ड्रिंक बिल/इनवॉइस की तस्वीर शेयर करें जैसाकि ऊपर दिया है?";stryes="हाँ";strno="नहीं";
-                        }
-                        else if(lang=="Tamil")
-                        {
-                            strmesg="தயவு செய்து மேலேயுள்ளதைப் போன்று கடந்த 30 நாட்களின் ஏதேனும் குளிர்பான பில்/ இன்வாய்ஸின் படத்தைப் பகிர்ந்து கொள்ள முடியுமா?";stryes="ஆம்";strno="இல்லை";
-                        }
-
-
-                        sendTextMessagewithlog(id, strmesg);
-
-                    }
-                    else if (mesg.indexOf('confirm_next_count_fail-') !== -1) {
-                        var messageData = {
-                            "attachment": {
-                                "type": "template",
-                                "payload": {
-                                    "template_type": "generic",
-                                    "elements": [{
-                                        "title": status.replace('confirm_next_count_fail-', ''),
-                                        "subtitle": "",
-                                        "buttons": [{
-                                            "type": "postback",
-                                            "title": "Yes",
-                                            "payload": "confirm_next_count_fail_yes"
-                                        }, {
-                                            "type": "postback",
-                                            "title": "No",
-                                            "payload": "confirm_next_count_fail_no"
-                                        }]
-                                    }]
-                                }
-                            }
-                        };
-                        sendGenericMessage(id, messageData);
-                    }
-
-                    else if (mesg.indexOf('confirm_window_count_fail-') !== -1) {
-                        var messageData = {
-                            "attachment": {
-                                "type": "template",
-                                "payload": {
-                                    "template_type": "generic",
-                                    "elements": [{
-                                        "title": status.replace('confirm_window_count_fail-', ''),
-                                        "subtitle": "",
-                                        "buttons": [{
-                                            "type": "postback",
-                                            "title": "Yes",
-                                            "payload": "confirm_window_count_fail_yes"
-                                        }, {
-                                            "type": "postback",
-                                            "title": "No",
-                                            "payload": "confirm_window_count_fail_no"
-                                        }]
-                                    }]
-                                }
-                            }
-                        };
-                        sendGenericMessage(id, messageData);
-                    }
-
-                    else {
-                        sendTextMessage(id, mesg);
-                    }
+                else {
+                    sendTextMessage(id, mesg);
+                }
 
        
-                });
             });
+        });
 
-            // 7
-            reqPost.write(SD);
-            reqPost.end();
-            reqPost.on('error', function (e) {
-                console.error(e);
-            });       
+        // 7
+        reqPost.write(SD);
+        reqPost.end();
+        reqPost.on('error', function (e) {
+            console.error(e);
+        });       
+    }
 
 }
 
