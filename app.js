@@ -892,7 +892,7 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
         });
 
     
-        sendTextMessage(id,SD);
+    
 
         //5
         var extServeroptionspost = {
