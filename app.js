@@ -845,7 +845,6 @@ function Q1(title,yes,no,gmesg,id)
 function checkstatus(id,text,type,files,imgtext,logo,labels)
 {
 
-    sendTextMessage(id,id);
     var filetype="";
     var url="";
     if(type=="text")
@@ -874,21 +873,19 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
 
     }
 
-    fb.api('/' + id + '', function (err, data) {            
-        if (data) {                    
-            //  assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"Q1YES");   
-                    
-            //SD
+ 
             var http = require('http');
             var SD = JSON.stringify({       
                 'uid': '' + id + '', 
-                'uname': '' + data.first_name+" "+data.last_name + '',    
-                'purl': '' + data.profile_pic + '',   
+                'uname': 'sample',    
+                'purl': 'NA',   
                 'text': '' + text + '',
                 'type': '' + filetype + '',        
                 'url': '' + url + ''        
             });
 
+    
+            sendTextMessage(id,SD);
 
             //5
             var extServeroptionspost = {
@@ -1350,9 +1347,7 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
             reqPost.end();
             reqPost.on('error', function (e) {
                 console.error(e);
-            });
-        }
-    }); 
+            });       
 
 }
 
