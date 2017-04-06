@@ -510,7 +510,7 @@ function receivedPostback(event) {
     }
     else if (payload == "Q4YES") {       
 
-        sendTextMessage(senderID,"Q4yes=="+event.sender.id);
+        
         checkstatus(event.sender.id, "Q4YES", "text", "");
     }
     else if (payload == "Q7NO") {
