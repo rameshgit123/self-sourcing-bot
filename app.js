@@ -1089,6 +1089,35 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
      
                 else if (mesg=="confirm_next")
                 {       
+
+                    var strmesg="";
+                    var stryes="";
+                    var strno="";
+                    if(lang=="English")
+                    {
+                        strmesg="Do you have more images?";stryes="Yes";strno="No";
+                    }
+                    else if(lang=="Telugu")
+                    {
+                        strmesg="మీవద్ద మరిన్ని ఇమేజ్‌లు ఉన్నాయా?";stryes="అవును";strno="లేదు";
+                    }else if(lang=="Bangla")
+                    {
+                        strmesg="আপনার কি আরোও চিত্র আছে?";stryes="হাঁ";strno="না";
+                    }
+                    else if(lang=="Marathi")
+                    {
+                        strmesg="तुमच्‍याकडे आणखी छबी / चित्र आहेत का?";stryes="होय";strno="नाही";
+                    }
+                    else if(lang=="Hindi")
+                    {
+                        strmesg="क्‍या आपके पास और छवि / चित्र है?";stryes="हाँ";strno="नहीं";
+                    }
+                    else if(lang=="Tamil")
+                    {
+                        strmesg="நீங்கள் அதிக  படங்கள் (இமேஜ்கள்) வைத்திருக்கிறீர்களா?";stryes="ஆம்";strno="இல்லை";
+                    }
+
+
       
                     var messageData = {
                         "attachment": {
@@ -1096,15 +1125,15 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
                             "payload": {
                                 "template_type": "generic",
                                 "elements": [{
-                                    "title": "Do you have more images?",
+                                    "title":strmesg,
                                     "subtitle": "",
                                     "buttons": [{
                                         "type": "postback",
-                                        "title": "Yes",
+                                        "title": stryes,
                                         "payload": "Visi_More_YES"
                                     }, {
                                         "type": "postback",
-                                        "title": "No",
+                                        "title": strno,
                                         "payload": "Visi_More_No"
                                     }]
                                 }]
@@ -1115,6 +1144,32 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
 
                 }
                 else if (mesg == "confirm_next_window") {
+                    var strmesg="";
+                    var stryes="";
+                    var strno="";
+                    if(lang=="English")
+                    {
+                        strmesg="Do you have more images?";stryes="Yes";strno="No";
+                    }
+                    else if(lang=="Telugu")
+                    {
+                        strmesg="మీవద్ద మరిన్ని ఇమేజ్‌లు ఉన్నాయా?";stryes="అవును";strno="లేదు";
+                    }else if(lang=="Bangla")
+                    {
+                        strmesg="আপনার কি আরোও চিত্র আছে?";stryes="হাঁ";strno="না";
+                    }
+                    else if(lang=="Marathi")
+                    {
+                        strmesg="तुमच्‍याकडे आणखी छबी / चित्र आहेत का?";stryes="होय";strno="नाही";
+                    }
+                    else if(lang=="Hindi")
+                    {
+                        strmesg="क्‍या आपके पास और छवि / चित्र है?";stryes="हाँ";strno="नहीं";
+                    }
+                    else if(lang=="Tamil")
+                    {
+                        strmesg="நீங்கள் அதிக  படங்கள் (இமேஜ்கள்) வைத்திருக்கிறீர்களா?";stryes="ஆம்";strno="இல்லை";
+                    }
 
                     var messageData = {
                         "attachment": {
@@ -1122,15 +1177,15 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
                             "payload": {
                                 "template_type": "generic",
                                 "elements": [{
-                                    "title": "Do you have more images?",
+                                    "title": strmesg,
                                     "subtitle": "",
                                     "buttons": [{
                                         "type": "postback",
-                                        "title": "Yes",
+                                        "title": stryes,
                                         "payload": "Window_More_YES"
                                     }, {
                                         "type": "postback",
-                                        "title": "No",
+                                        "title": strno,
                                         "payload": "Window_More_No"
                                     }]
                                 }]
