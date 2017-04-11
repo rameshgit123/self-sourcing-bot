@@ -403,6 +403,10 @@ function receivedPostback(event) {
                             "type": "postback",
                             "title": "Telugu",
                             "payload": "Telugu"
+                        },{
+                            "type": "postback",
+                            "title": "Tamil",
+                            "payload": "Tamil"
                         }]
                     }]
                 }
@@ -738,7 +742,7 @@ function assignmission(id,name,picurl,Status,recipientID)
                 }
                 else if(lang=="Hindi")
                 {
-                    Q1("क्या आपके पास कोई विजीस्कूलर / फ्रिज / चिलर है जैसाकि नीचे दिया है?","हाँ","नहीं","नमस्‍ते",id);
+                    Q1("क्या आपके पास कोई विजीस्कूलर / फ्रिज / चिलर है जैसाकि ऊपर दिया है?","हाँ","नहीं","नमस्‍ते",id);
                 }
                 else if(lang=="Tamil")
                 {
@@ -933,7 +937,7 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
                     }
                     else if(lang=="Hindi")
                     {
-                        Q1("क्या आपके पास कोई विजीस्कूलर / फ्रिज / चिलर है जैसाकि नीचे दिया है?","हाँ","नहीं","नमस्‍ते",id);
+                        Q1("क्या आपके पास कोई विजीस्कूलर / फ्रिज / चिलर है जैसाकि ऊपर दिया है?","हाँ","नहीं","नमस्‍ते",id);
                     }
                     else if(lang=="Tamil")
                     {
@@ -958,7 +962,12 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
                                     },{
                                         "type": "postback",
                                         "title": "Telugu",
-                                        "payload": "Telugu"
+                                        "payload": "Telugu",
+
+                                    },{
+                                        "type": "postback",
+                                        "title": "Tamil",
+                                        "payload": "Tamil"
                                     }]
                                 }]
                             }
