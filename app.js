@@ -947,70 +947,35 @@ function checkstatus(id,text,type,files,imgtext,logo,labels)
                 }
                 else if(mesg=="NewLang")
                 {
-                    var messageData2 = {                  
-                        "attachment": {
-                            "type": "template",
-                            "payload": {
-                                "template_type": "generic",
-                                "elements": [{
-                                    "title": "Select Your Language",
-                                    "subtitle": "",
-                                    "buttons": [{
-                                        "type": "postback",
-                                        "title": "English",
-                                        "payload": "English"
-                                    },{
-                                        "type": "postback",
-                                        "title": "Telugu",
-                                        "payload": "Telugu",
-
-                                    },{
-                                        "type": "postback",
-                                        "title": "Tamil",
-                                        "payload": "Tamil"
-                                    }]
-                                }]
-                            }
-                        }                    
-                    };
-
-                    //Bangla
-                    var messageData1 = {                  
-                        "attachment": {
-                            "type": "template",
-                            "payload": {
-                                "template_type": "generic",
-                                "elements": [{
-                                    "title": "Select Your Language",
-                                    "subtitle": "",
-                                    "buttons": [{
-                                        "type": "postback",
-                                        "title": "Bangla",
-                                        "payload": "Bangla"
-                                    },{
-                                        "type": "postback",
-                                        "title": "Marathi",
-                                        "payload": "Marathi"
-                                    },{
-                                        "type": "postback",
-                                        "title": "Hindi",
-                                        "payload": "Hindi"
-                                    }]
-                                }]
-                            }
-                        }                    
-                    };
-                    setTimeout(function () {           
-                        sendGenericMessage(id,messageData2);
-                        sendGenericMessage(id,messageData1);
-                    }, 200);
-
-                    fb.api('/' + id + '', function (err, data) {
-                        if (data) {
-
-                            assignmission(senderID, data.first_name + " " + data.last_name, data.profile_pic, "REG_USERS", recipientID);
-                        }
-                    });
+                   var messageData = {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "Nielsen Privacy and Consent Notice",
+                        "subtitle": "",
+                        "image_url": "",
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://self-sourcing-bot.herokuapp.com/",
+                            "title": "View Nielsen Privacy"                          
+                        }, {
+                            "type": "postback",
+                            "title": "Agree",
+                            "payload": "Agree"
+                        },
+                         {
+                             "type": "postback",
+                             "title": "Disagree",
+                             "payload": "Disagree"
+                         }]
+                    }]
+                }
+            }
+        };
+   
+        sendGenericMessage(id, messageData);
                 }
                 else if(mesg=="Q2"){ 
 
